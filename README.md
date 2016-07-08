@@ -56,9 +56,20 @@ straight-forward.
 
 **Sections**
 
+- [Example `.travis.yml`](#example-travis-config)
 - [Using the `after_deploy` step](#deploy)
 - [Using the `after_script` step](#after_success)
 - [Creating an API token](#creating-an-api-token)
+
+### Example Travis config
+
+You can see a runnable `travis.yml` in the repo here:
+
+- https://github.com/assertible/deployments/blob/master/.travis.yml
+
+_Note: You can just copy the two lines below into your existing
+config, if you have one. Otherwise, read the sections below to
+determine which step you should run your Assertible deployment._
 
 ### `deploy`
 
