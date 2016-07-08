@@ -1,38 +1,66 @@
 # Assertible post deployment testing
 
-With Assertible's
-[Github Deployments integration](https://assertible.com/docs#github-deployments),
+With Assertible's [Github Deployments integration](github-intgration),
 you can run tests against your API or web application every time you
 launch a new version. Integrating into your existing CI workflow
 should be straightforward; below are examples for common services.
 
 ### CI and Deployment services
 
-- [Heroku](#heroku) (https://heroku.com)
-- [Travis CI](#travis-ci) (https://travis-ci.org)
+- [Heroku](#heroku) ([website](heroku))
+- [Travis CI](#travis-ci) ([website](travis-ci))
 
-### Heroku
+### <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-logo.png" width="50" alt="Heroku" /> Heroku
 
-If you have Heroku connected to your GitHub repository already, then
-it is already set up to send deployment events and will work out of
-the box with Assertible. In most cases, no further configuration is
-required.
+If you're using Heroku and have the GitHub integration enabled, then
+your Assertible integration will work without any further
+configuration. You can read how to enable this for your Heroku account
+here:
 
-### Travis CI
+- https://devcenter.heroku.com/articles/github-integration
 
-If you're deploying from [Travis-CI](https://travis-ci.org) during the
-`deploy` or `after_success` steps and not already receiving deployment
-events to your repository, then you can use one of these
-configurations:
+### <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/TravisCI-Mascot.png" width="50" /> Travis CI
 
-`deploy` -> `after_deploy`
+> Note that the examples below assume that you have a $GH_TOKEN
+> environment variable defined in your Travis environment. See the API
+> token section.
 
-If you use the `deploy` step in the `.travis.yml`, then the best
-option is the use the `after_deploy` step:
+If you deploy a website or API from Travis-CI (especially if you're
+using the `deploy` or `after_success` steps), then running your
+Assertible tests after a successful deployment should be
+straight-forward.
+
+##### `deploy`
+
+If you use the `deploy` step in your Travis configuration then you can
+create a GitHub deployment event in the `after_deploy` step, like this:
 
 ```yaml
-    after_deploy:
-      - |
-        DEPLOY_ID=$(curl -XPOST --verbose "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
-        curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
+after_deploy:
+  - |
+    DEPLOY_ID=$(curl -XPOST --verbose "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
+    curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
 ```
+
+_Note: If the `deploy` command does not exit successfully then
+`after_deploy` won't run_
+
+Depending on which 'provider' you use for your deploy, you may not
+need the `after_deploy` step at all. For example, if you use the
+Heroku provider and your Heroku account is linked with your GitHub
+repository, then you will already receive deployment events and your
+Assertible integration will work.
+
+##### `after_success`
+
+If your `.travis.yml` runs any deployments during the `after_success` step,
+then you have two options. Using the same code snippet as above, you can:
+
+- Add the lines at the end of your existing `after_success` scrips, or
+- Run the lines aboves during the `after_script` step in your
+  `.travis.yml`.
+
+
+[github-integration]: https://assertible.com/docs#github-deployments
+[heroku]: https://heroku.com
+[travis-ci]: https://travis-ci.org
