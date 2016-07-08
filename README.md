@@ -14,20 +14,20 @@ should be straightforward; below are examples for common services.
 
 If you're using Heroku and have the GitHub integration enabled, then
 your Assertible integration will work without any further
-configuration. You can read how to enable this for your Heroku account
-here:
-
-- https://devcenter.heroku.com/articles/github-integration
-
-On the 'Deployment' page of your Heroku app, you'll want to see that your GitHub repository is connected:
+configuration. On the 'Deployment' page of your Heroku app, you'll
+want to see that your GitHub repository is connected:
 
 ![Heroku Github integration](https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-github-connected.png)
+
+You can read how to enable this for your Heroku account here:
+
+- https://devcenter.heroku.com/articles/github-integration
 
 ## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/TravisCI-Mascot.png" width="50" /> Travis CI
 
 > Note that the examples below assume that you have a $GH_TOKEN
-> environment variable defined in your Travis environment. See the API
-> token section.
+> environment variable defined in your Travis environment. See the [API
+> token section](#creating-an-api-token).
 
 If you deploy a website or API from Travis-CI (especially if you're
 using the `deploy` or `after_success` steps), then running your
@@ -63,6 +63,19 @@ then you have two options. Using the same code snippet as above, you can:
 - Add the lines at the end of your existing `after_success` scrips, or
 - Run the lines aboves during the `after_script` step in your
   `.travis.yml`.
+
+### Creating an API Token
+
+The code snippet's above assume that you have a `GH_TOKEN` environment
+variable in your Travis configuration. If you don't already have that,
+the easiest way to set it up is described below:
+
+- [Create a Peronal Access Token](https://github.com/settings/tokens)
+  in your GitHub settings. Make sure to give it 'repo' access.
+
+- Add an environment variable in your
+  [Travis-CI repository settings](https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings)
+  named `GH_TOKEN`.
 
 
 [github-integration]: https://assertible.com/docs#github-deployments
