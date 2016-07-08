@@ -1,4 +1,8 @@
-# <img src="https://assertible.com/images/logo/logo-512x512.png" width="50" alt="Assertible logo" style="margin-bottom:-10px" /> Assertible post deployment testing
+<div align="center">
+  <img src="https://assertible.com/images/logo/logo-512x512.png" width="50" alt="Assertible logo" />
+</div>
+
+# Post deployment testing with Assertible
 
 > Post deployment testing is the process of running automated tests
 > against your production or staging environment after deploying a new
@@ -31,8 +35,9 @@ your Assertible integration will work without any further
 configuration. On the 'Deployment' page of your Heroku app, you'll
 want to see that your GitHub repository is connected:
 
-<img alt="Heroku Github integration" src="https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-github-connected.png" style="display:block;margin:auto" />
-
+<div align="center">
+  <img alt="Heroku Github integration" src="https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-github-connected.png" style="display:block;margin:auto" />
+</div>
 
 You can read how to enable this for your Heroku account here:
 
@@ -52,7 +57,7 @@ straight-forward.
 **Sections**
 
 - [Using the `after_deploy` step](#deploy)
-- [Using the `after_script` step](#after-success)
+- [Using the `after_script` step](#after_success)
 - [Creating an API token](#creating-an-api-token)
 
 ### `deploy`
@@ -84,6 +89,15 @@ then you have two options. Using the same code snippet as above, you can:
 - Add the lines at the end of your existing `after_success` scrips, or
 - Run the lines aboves during the `after_script` step in your
   `.travis.yml`.
+
+Example:
+
+```yaml
+after_script:
+  - |
+    DEPLOY_ID=$(curl -XPOST --verbose "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
+    curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
+```
 
 ### Creating an API Token
 
