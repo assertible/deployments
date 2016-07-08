@@ -19,6 +19,10 @@ here:
 
 - https://devcenter.heroku.com/articles/github-integration
 
+On the 'Deployment' page of your Heroku app, you'll want to see that your GitHub repository is connected:
+
+![Heroku Github integration](https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-github-connected.png)
+
 ## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/TravisCI-Mascot.png" width="50" /> Travis CI
 
 > Note that the examples below assume that you have a $GH_TOKEN
