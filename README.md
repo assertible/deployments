@@ -1,12 +1,13 @@
-# Assertible post deployment testing
+# <img src="https://assertible.com/images/logo/logo-512x512.png" width="50" alt="Assertible logo"/> Assertible post deployment testing
 
 > Post deployment testing is the process of running automated tests
-> against your production or staging environment after deploying
-> a new application version. [Assertible](assertible) integrates
+> against your production or staging environment after deploying a new
+> application version. [Assertible](https://assertible.com) integrates
 > into your GitHub deployments pipeline to run your tests and
 > assertions after each successful deploy.
 
-With Assertible's [Github Deployments integration](github-intgration),
+With Assertible's
+[Github Deployments integration](https://assertible.com/docs#github-deployments),
 you can **run tests against your API or web application every time you
 launch a new version**. Integrating into your existing CI workflow
 should be straightforward. This document, and the configuration files
@@ -15,7 +16,7 @@ your CI and deployments
 
 **Resources**
 - [Assertible GitHub Deployments Documentation](https://assertible.com/docs#github-deployments)
-- [GitHub Deployments API](https://assertible.com/docs#github-deployments)
+- [GitHub Deployments API](https://developer.github.com/v3/repos/deployments/)
 
 
 ## CI and Deployment configurations
@@ -30,9 +31,8 @@ your Assertible integration will work without any further
 configuration. On the 'Deployment' page of your Heroku app, you'll
 want to see that your GitHub repository is connected:
 
-<div style="text-align:center">
-  <img alt="Heroku Github integration" src="https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-github-connected.png" />
-</div>
+<img alt="Heroku Github integration" src="https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-github-connected.png" style="display:block;margin:auto" />
+
 
 You can read how to enable this for your Heroku account here:
 
