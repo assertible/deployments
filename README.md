@@ -5,12 +5,12 @@ you can run tests against your API or web application every time you
 launch a new version. Integrating into your existing CI workflow
 should be straightforward; below are examples for common services.
 
-### CI and Deployment services
+## CI and Deployment services
 
 - [Heroku](#heroku) ([website](heroku))
 - [Travis CI](#travis-ci) ([website](travis-ci))
 
-### <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-logo.png" width="50" alt="Heroku" /> Heroku
+## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-logo.png" width="50" alt="Heroku" /> Heroku
 
 If you're using Heroku and have the GitHub integration enabled, then
 your Assertible integration will work without any further
@@ -19,7 +19,7 @@ here:
 
 - https://devcenter.heroku.com/articles/github-integration
 
-### <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/TravisCI-Mascot.png" width="50" /> Travis CI
+## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/TravisCI-Mascot.png" width="50" /> Travis CI
 
 > Note that the examples below assume that you have a $GH_TOKEN
 > environment variable defined in your Travis environment. See the API
@@ -30,7 +30,7 @@ using the `deploy` or `after_success` steps), then running your
 Assertible tests after a successful deployment should be
 straight-forward.
 
-##### `deploy`
+### `deploy`
 
 If you use the `deploy` step in your Travis configuration then you can
 create a GitHub deployment event in the `after_deploy` step, like this:
@@ -51,7 +51,7 @@ Heroku provider and your Heroku account is linked with your GitHub
 repository, then you will already receive deployment events and your
 Assertible integration will work.
 
-##### `after_success`
+### `after_success`
 
 If your `.travis.yml` runs any deployments during the `after_success` step,
 then you have two options. Using the same code snippet as above, you can:
