@@ -18,15 +18,11 @@ should be straightforward. This document, and the configuration files
 in this repo, will help you set up your Assertible tests to run after
 your CI and deployments
 
-**Resources**
-- [Setting up Assertible and GitHub Deployments](https://assertible.com/docs#github-deployments)
-- [GitHub Deployments API](https://developer.github.com/v3/repos/deployments/)
-
-
 ## Configurations
 
 - [Heroku](#heroku) ([website](https://heroku.com))
 - [Travis CI](#travis-ci) ([website](https://travis-ci.org))
+- [Additional resources](#additional-resources)
 
 ## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-logo.png" width="50" alt="Heroku" style="margin-bottom:-10px" /> Heroku
 
@@ -122,3 +118,11 @@ the easiest way to set it up is described below:
 - Add an environment variable in your
   [Travis-CI repository settings](https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings)
   named `GH_TOKEN`.
+
+### Additional resources
+
+These links provide omre information on the underlying technology and
+services that make this work:
+
+- [Setting up Assertible and GitHub Deployments](https://assertible.com/docs#github-deployments)
+- [GitHub Deployments API](https://developer.github.com/v3/repos/deployments/)
