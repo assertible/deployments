@@ -1,5 +1,7 @@
 <div align="center">
-  <img src="https://assertible.com/images/logo/logo-512x512.png" width="100" alt="Assertible logo" />
+  <a href="https://assertible.com">
+    <img src="https://assertible.com/images/logo/logo-512x512.png" width="100" alt="Assertible logo" />
+  </a>
 </div>
 
 # Post deployment testing with Assertible
@@ -19,6 +21,9 @@ launch a new version**. Integrating into your existing CI workflow
 should be straightforward. This document, and the configuration files
 in this repo, will help you set up your Assertible tests to run after
 new deployments.
+
+If you don't have an Assertible account yet, you can
+[**sign up for free**](https://assertible.com/signup).
 
 ## Configurations
 
