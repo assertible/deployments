@@ -26,10 +26,13 @@ Find your continuous integration or deployments provider below to see
 the recommended steps for setting up your Assertible integration:
 
 - [Heroku](#-heroku) ([website](https://heroku.com))
+
 - [Travis CI](#-travis-ci) ([website](https://travis-ci.org))
 
 - [Additional resources](#additional-resources)
+
 - [Example Projects](#example-projects)
+
 - [Badges!](#test-badges)
 
 ## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-logo.png" width="50" alt="Heroku" style="margin-bottom:-10px" /> Heroku
