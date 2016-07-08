@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://assertible.com/images/logo/logo-512x512.png" width="75" alt="Assertible logo" />
+  <img src="https://assertible.com/images/logo/logo-512x512.png" width="100" alt="Assertible logo" />
 </div>
 
 # Post deployment testing with Assertible
@@ -20,8 +20,12 @@ your CI and deployments
 
 ## Configurations
 
-- [Heroku](#heroku) ([website](https://heroku.com))
-- [Travis CI](#travis-ci) ([website](https://travis-ci.org))
+Find your continuous integration or continous deployments provider
+below to see the best steps to take for setting up your Assertible
+integration:
+
+- [Heroku](#-heroku) ([website](https://heroku.com))
+- [Travis CI](#-travis-ci) ([website](https://travis-ci.org))
 - [Additional resources](#additional-resources)
 
 ## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-logo.png" width="50" alt="Heroku" style="margin-bottom:-10px" /> Heroku
@@ -31,9 +35,11 @@ your Assertible integration will work without any further
 configuration. On the 'Deployment' page of your Heroku app, you'll
 want to see that your GitHub repository is connected:
 
+<br/>
 <div align="center">
   <img alt="Heroku Github integration" src="https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-github-connected.png" style="display:block;margin:auto" />
 </div>
+<br/>
 
 You can read how to enable this for your Heroku account here:
 
@@ -46,9 +52,9 @@ You can read how to enable this for your Heroku account here:
 > token section](#creating-an-api-token).
 
 If you deploy a website or API from Travis-CI (especially if you're
-using the `deploy` or `after_success` steps), then running your
-Assertible tests after a successful deployment should be
-straight-forward.
+using the `deploy` or `after_success` steps), then it will be easy to
+trigger a deployment even for running your Assertible tests. The
+sections below describe the two most common use-cases:
 
 **Sections**
 
@@ -64,13 +70,16 @@ You can see a runnable `travis.yml` in the repo here:
 - https://github.com/assertible/deployments/blob/master/.travis.yml
 
 _Note: You can just copy the two lines below into your existing
-config, if you have one. Otherwise, read the sections below to
-determine which step you should run your Assertible deployment._
+config, if you have one. Otherwise, continue reading to determine
+which setup will work best._
 
 ### `deploy`
 
-If you use the `deploy` step in your Travis configuration then you can
-create a GitHub deployment event in the `after_deploy` step, like this:
+If you use the [`deploy`](https://docs.travis-ci.com/user/deployment)
+step in your Travis configuration then you can create a GitHub
+deployment event in the
+[`after_deploy`](https://docs.travis-ci.com/user/customizing-the-build/#Deploying-your-Code)
+step, like this:
 
 ```yaml
 after_deploy:
@@ -80,21 +89,23 @@ after_deploy:
 ```
 
 _Note: If the `deploy` command does not exit successfully then
-`after_deploy` won't run_
+`after_deploy` won't run._
 
 Depending on which 'provider' you use for your deploy, you may not
 need the `after_deploy` step at all. For example, if you use the
-Heroku provider and your Heroku account is linked with your GitHub
-repository, then you will already receive deployment events and your
-Assertible integration will work.
+Heroku provider and your Heroku account is
+[linked with your GitHub](#-heroku) repository, then you will already
+receive deployment events and the Assertible integration will work.
 
 ### `after_success`
 
-If your `.travis.yml` runs any deployments during the `after_success` step,
-then you have two options. Using the same code snippet as above, you can:
+If your `.travis.yml` runs any deployments during the
+[`after_success`](https://docs.travis-ci.com/user/customizing-the-build/#The-Build-Lifecycle)
+step, then you have two options:
 
-- Add the lines at the end of your existing `after_success` scrips, or
-- Run the lines aboves during the `after_script` step in your
+- Add the following lines to the end of your existing `after_success`
+  script, or
+- Place the following line in the `after_script` step in your
   `.travis.yml`.
 
 Example:
@@ -106,9 +117,12 @@ after_script:
     curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
 ```
 
+Read more about `after_success` here:
+https://docs.travis-ci.com/user/customizing-the-build/
+
 ### Creating an API Token
 
-The code snippet's above assume that you have a `GH_TOKEN` environment
+The configurations above assume that you have a `GH_TOKEN` environment
 variable in your Travis configuration. If you don't already have that,
 the easiest way to set it up is described below:
 
