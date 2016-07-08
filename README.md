@@ -7,11 +7,18 @@
 > assertions after each successful deploy.
 
 With Assertible's [Github Deployments integration](github-intgration),
-you can run tests against your API or web application every time you
-launch a new version. Integrating into your existing CI workflow
-should be straightforward; below are examples for common services.
+you can **run tests against your API or web application every time you
+launch a new version**. Integrating into your existing CI workflow
+should be straightforward. This document, and the configuration files
+in this repo, will help you set up your Assertible tests to run after
+your CI and deployments
 
-## CI and Deployment services
+**Resources**
+- [Assertible GitHub Deployments Documentation](https://assertible.com/docs#github-deployments)
+- [GitHub Deployments API](https://assertible.com/docs#github-deployments)
+
+
+## CI and Deployment configurations
 
 - [Heroku](#heroku) ([website](heroku))
 - [Travis CI](#travis-ci) ([website](travis-ci))
