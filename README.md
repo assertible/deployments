@@ -1,5 +1,11 @@
 # Assertible post deployment testing
 
+> Post deployment testing is the process of running automated tests
+> against your production or staging environment after deploying
+> a new application version. [Assertible](assertible) integrates
+> into your GitHub deployments pipeline to run your tests and
+> assertions after each successful deploy.
+
 With Assertible's [Github Deployments integration](github-intgration),
 you can run tests against your API or web application every time you
 launch a new version. Integrating into your existing CI workflow
@@ -17,7 +23,9 @@ your Assertible integration will work without any further
 configuration. On the 'Deployment' page of your Heroku app, you'll
 want to see that your GitHub repository is connected:
 
-![Heroku Github integration](https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-github-connected.png)
+<div style="text-align:center">
+  <img alt="Heroku Github integration" src="https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-github-connected.png" />
+</div>
 
 You can read how to enable this for your Heroku account here:
 
@@ -78,6 +86,7 @@ the easiest way to set it up is described below:
   named `GH_TOKEN`.
 
 
+[assertible]: https://assertible.com
 [github-integration]: https://assertible.com/docs#github-deployments
 [heroku]: https://heroku.com
 [travis-ci]: https://travis-ci.org
