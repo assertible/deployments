@@ -59,7 +59,7 @@ below describe the most common use-cases:
 
 - [Example `.travis.yml`](#example-travis-config)
 - [Using the `after_deploy` step](#deploy)
-- [Using the `after_script` step](#after_success)
+- [Using `after_script` or `after_success`](#after_success)
 - [Creating an API token](#creating-an-api-token)
 
 ### Example Travis config
