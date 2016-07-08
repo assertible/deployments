@@ -1,4 +1,4 @@
-# <img src="https://assertible.com/images/logo/logo-512x512.png" width="50" alt="Assertible logo"/> Assertible post deployment testing
+# <img src="https://assertible.com/images/logo/logo-512x512.png" width="50" alt="Assertible logo" style="margin-bottom:-10px" /> Assertible post deployment testing
 
 > Post deployment testing is the process of running automated tests
 > against your production or staging environment after deploying a new
@@ -15,16 +15,16 @@ in this repo, will help you set up your Assertible tests to run after
 your CI and deployments
 
 **Resources**
-- [Assertible GitHub Deployments Documentation](https://assertible.com/docs#github-deployments)
+- [Setting up Assertible and GitHub Deployments](https://assertible.com/docs#github-deployments)
 - [GitHub Deployments API](https://developer.github.com/v3/repos/deployments/)
 
 
-## CI and Deployment configurations
+## Configurations
 
-- [Heroku](#heroku) ([website](heroku))
-- [Travis CI](#travis-ci) ([website](travis-ci))
+- [Heroku](#heroku) ([website](https://heroku.com))
+- [Travis CI](#travis-ci) ([website](https://travis-ci.org))
 
-## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-logo.png" width="50" alt="Heroku" /> Heroku
+## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-logo.png" width="50" alt="Heroku" style="margin-bottom:-10px" /> Heroku
 
 If you're using Heroku and have the GitHub integration enabled, then
 your Assertible integration will work without any further
@@ -48,6 +48,12 @@ If you deploy a website or API from Travis-CI (especially if you're
 using the `deploy` or `after_success` steps), then running your
 Assertible tests after a successful deployment should be
 straight-forward.
+
+**Sections**
+
+- [Using the `after_deploy` step](#deploy)
+- [Using the `after_script` step](#after-success)
+- [Creating an API token](#creating-an-api-token)
 
 ### `deploy`
 
@@ -91,9 +97,3 @@ the easiest way to set it up is described below:
 - Add an environment variable in your
   [Travis-CI repository settings](https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings)
   named `GH_TOKEN`.
-
-
-[assertible]: https://assertible.com
-[github-integration]: https://assertible.com/docs#github-deployments
-[heroku]: https://heroku.com
-[travis-ci]: https://travis-ci.org
