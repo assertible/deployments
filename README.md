@@ -25,7 +25,9 @@ the recommended steps for setting up your Assertible integration:
 
 - [Heroku](#-heroku) ([website](https://heroku.com))
 - [Travis CI](#-travis-ci) ([website](https://travis-ci.org))
+
 - [Additional resources](#additional-resources)
+- [Example Projects](#example-projects)
 
 ## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-logo.png" width="50" alt="Heroku" style="margin-bottom:-10px" /> Heroku
 
@@ -132,7 +134,7 @@ the easiest way to set it up is described below:
   [Travis-CI repository settings](https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings)
   named `GH_TOKEN`.
 
-### Additional resources
+## Additional resources
 
 These links provide more information on the underlying technology and
 services that make this work:
@@ -140,3 +142,30 @@ services that make this work:
 - [Assertible - Getting Started](https://assertible.com/docs)
 - [Setting up Assertible and GitHub Deployments](https://assertible.com/docs#github-deployments)
 - [GitHub Deployments API](https://developer.github.com/v3/repos/deployments/)
+
+## Example projects
+
+There are some open source projects using Assertible with this
+configuration; if you're a visual learner then one of these might be
+helpful:
+
+- [reichertbrothers.com](https://github.com/rbros/rbros.github.io)
+  reichertbrothers.com is the website for a Haskell consulting
+  company. The website is deployed to GitHub Pages from a Travis-CI
+  build. Once the site has been successfuly deployed, a deployment
+  event is triggered and Assertible's post-production tests will run.
+
+- [CheckAFlip](http://checkaflip.com)
+  CheckAFlip is a tool for quickly learning the best price at which to
+  buy or sell any item. The app is deployed from Heroku and, after
+  deploying, Heroku sends a deployment success event and Assertible
+  test's get run.
+
+_Have an open source project using Assertble for post deployment
+testing? Drop us a note and we'll add it to the list!_
+
+## License
+
+All of the code snippets in this repository are licensed under MIT.
+
+[View the license](https://github.com/assertible/deployments/blob/master/LICENSE)
