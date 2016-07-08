@@ -4,6 +4,8 @@
 
 # Post deployment testing with Assertible
 
+![Assertible status](https://assertible.com/tests/c5116251-e4de-4a69-a82b-aa7045b6de60/status?api_token=138d9afe7ffa6f508e)
+
 > Post deployment testing is the process of running automated tests
 > against your production or staging environment after deploying a new
 > application version. [Assertible](https://assertible.com) integrates
@@ -28,6 +30,7 @@ the recommended steps for setting up your Assertible integration:
 
 - [Additional resources](#additional-resources)
 - [Example Projects](#example-projects)
+- [Badges!](#test-badges)
 
 ## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-logo.png" width="50" alt="Heroku" style="margin-bottom:-10px" /> Heroku
 
@@ -163,6 +166,20 @@ helpful:
 
 _Have an open source project using Assertble for post deployment
 testing? Drop us a note and we'll add it to the list!_
+
+## Test Badges
+
+Assertible offers
+[test badges](https://assertible.com/docs#test-badges) so you can
+display the current status of your API or website's assertions. The
+badges can be retrieved from within your
+[Assertible dashboard](https://assertible.com/login). Here's what they
+look like:
+
+![Assertible status](https://assertible.com/tests/c5116251-e4de-4a69-a82b-aa7045b6de60/status?api_token=138d9afe7ffa6f508e)
+
+Cool! Pick yours up today and add it to your repository -- or start in
+the [documentation](https://assertible.com/docs#test-badges)
 
 ## License
 
