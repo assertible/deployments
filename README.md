@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://assertible.com/images/logo/logo-512x512.png" width="50" alt="Assertible logo" />
+  <img src="https://assertible.com/images/logo/logo-512x512.png" width="75" alt="Assertible logo" />
 </div>
 
 # Post deployment testing with Assertible
