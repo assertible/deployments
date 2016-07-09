@@ -6,7 +6,7 @@
 
 # Post deployment testing with Assertible
 
-![Assertible status](https://assertible.com/tests/c5116251-e4de-4a69-a82b-aa7045b6de60/status?api_token=138d9afe7ffa6f508e)
+[![Assertible status](https://assertible.com/tests/c5116251-e4de-4a69-a82b-aa7045b6de60/status?api_token=138d9afe7ffa6f508e)](https://github.com/assertible/deployments)
 
 > Post deployment testing is the process of running automated tests
 > against your production or staging environment after deploying a new
