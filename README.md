@@ -34,6 +34,8 @@ the recommended steps for setting up your Assertible integration:
 
 - [Travis CI](#-travis-ci) ([website](https://travis-ci.org))
 
+- [Circle CI](#-circle-ci) ([website](https://circleci.com))
+
 - [Additional resources](#additional-resources)
 
 - [Example Projects](#example-projects)
@@ -77,7 +79,7 @@ below describe the most common use-cases:
 
 ### Example Travis config
 
-You can see a runnable `travis.yml` in the repo here:
+You can see a runnable `.travis.yml` in the repo here:
 
 - https://github.com/assertible/deployments/blob/master/.travis.yml
 
@@ -132,18 +134,54 @@ after_script:
 Read more about `after_success` step here:
 https://docs.travis-ci.com/user/customizing-the-build/
 
+## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/circleci-logo.png" width="50" /> Circle CI
+
+> Note that the examples below assume that you have a $GH_TOKEN
+> environment variable defined in your Circle CI environment. See the [API
+> token section](#creating-a-circleci-api-token).
+
+If you deploy a website or API from Circle CI (especially if you're
+using the `deployment` step), then it will be easy to trigger a
+deployment event to run your Assertible tests. The sections below
+describe the most common use-cases:
+
+**Sections**
+
+- [Example `circle.yml`](#example-circle-config)
+- [Using the `deployment` step](#deploy)
+- [Creating an API token](#creating-an-api-token)
+
+### Example CircleCI config
+
+You can see a runnable `circle.yml` in the repo here:
+
+- https://github.com/assertible/deployments/blob/master/circle.yml
+
+_Note: You can just copy the two lines below into your existing
+configuration, if you have one. Otherwise, continue reading to
+determine which setup will work best._
+
 ### Creating an API Token
 
 The configurations above assume that you have a `GH_TOKEN` environment
-variable in your Travis configuration. If you don't already have that,
-the easiest way to set it up is described below:
+variable in your CI configuration. If you don't already have that, the
+easiest way to set it up is described below:
 
 - [Create a Peronal Access Token](https://github.com/settings/tokens)
   in your GitHub settings. Make sure to give it 'repo' access.
 
+#### Travis CI
+
 - Add than token as an environment variable in your
-  [Travis-CI repository settings](https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings)
+[Travis-CI repository settings](https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings)
+named `GH_TOKEN`.
+
+#### CircleCI CI
+
+- Add than token as an environment variable in your
+  [Circle CI repository settings](https://circleci.com/docs/environment-variables/)
   named `GH_TOKEN`.
+
 
 ## Additional resources
 
