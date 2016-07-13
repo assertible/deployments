@@ -157,10 +157,6 @@ You can see a runnable `circle.yml` in the repo here:
 
 - https://github.com/assertible/deployments/blob/master/circle.yml
 
-_Note: You can just copy the two lines below into your existing
-configuration, if you have one. Otherwise, continue reading to
-determine which setup will work best._
-
 ### `deployment`
 
 If your `circle.yml` runs a
@@ -177,6 +173,11 @@ deployment:
           DEPLOY_ID=$(curl -XPOST --verbose "https://$GH_TOKEN@api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
           curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
 ```
+
+_Note: If you're deployment uses a built-in provider like Heroku or
+AWS, deployment events may already be sent and this script would be
+unecessary. If possible, determine if hooks are already being
+delivered in your existing deployment steps before using this script._
 
 Read more about `deployment` step here:
 https://circleci.com/docs/configuration/#deployment
