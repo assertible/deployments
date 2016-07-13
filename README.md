@@ -34,6 +34,8 @@ the recommended steps for setting up your Assertible integration:
 
 - [Travis CI](#-travis-ci) ([website](https://travis-ci.org))
 
+- [Circle CI](#-circle-ci) ([website](https://circleci.com))
+
 - [Additional resources](#additional-resources)
 
 - [Example Projects](#example-projects)
@@ -77,7 +79,7 @@ below describe the most common use-cases:
 
 ### Example Travis config
 
-You can see a runnable `travis.yml` in the repo here:
+You can see a runnable `.travis.yml` in the repo here:
 
 - https://github.com/assertible/deployments/blob/master/.travis.yml
 
@@ -132,18 +134,75 @@ after_script:
 Read more about `after_success` step here:
 https://docs.travis-ci.com/user/customizing-the-build/
 
+## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/circleci-logo.png" width="50" /> Circle CI
+
+> Note that the examples below assume that you have a $GH_TOKEN
+> environment variable defined in your Circle CI environment. See the [API
+> token section](#creating-an-api-token).
+
+If you deploy a website or API from Circle CI (especially if you're
+using the `deployment` step), then it will be easy to trigger a
+deployment event to run your Assertible tests. The sections below
+describe the most common use-cases:
+
+**Sections**
+
+- [Example `circle.yml`](#example-circle-config)
+- [Using the `deployment` step](#deployment)
+- [Creating an API token](#creating-an-api-token)
+
+### Example CircleCI config
+
+You can see a runnable `circle.yml` in the repo here:
+
+- https://github.com/assertible/deployments/blob/master/circle.yml
+
+### `deployment`
+
+If your `circle.yml` runs a
+[`deployment`](https://circleci.com/docs/configuration/#deployment)
+step, add the following lines to the end of the `commands` section:
+
+```yaml
+deployment:
+  production:
+    branch: master
+    commands:
+      # - ./deploy script here
+      - |
+          DEPLOY_ID=$(curl -XPOST --verbose "https://$GH_TOKEN@api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
+          curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
+```
+
+_Note: If you're deployment uses a built-in provider like Heroku or
+AWS, deployment events may already be sent and this script would be
+unecessary. If possible, determine if hooks are already being
+delivered in your existing deployment steps before using this script._
+
+Read more about `deployment` step here:
+https://circleci.com/docs/configuration/#deployment
+
 ### Creating an API Token
 
 The configurations above assume that you have a `GH_TOKEN` environment
-variable in your Travis configuration. If you don't already have that,
-the easiest way to set it up is described below:
+variable in your CI configuration. If you don't already have that, the
+easiest way to set it up is described below:
 
 - [Create a Peronal Access Token](https://github.com/settings/tokens)
   in your GitHub settings. Make sure to give it 'repo' access.
 
+#### Travis CI
+
 - Add than token as an environment variable in your
-  [Travis-CI repository settings](https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings)
+[Travis-CI repository settings](https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings)
+named `GH_TOKEN`.
+
+#### CircleCI CI
+
+- Add than token as an environment variable in your
+  [Circle CI repository settings](https://circleci.com/docs/environment-variables/)
   named `GH_TOKEN`.
+
 
 ## Additional resources
 
