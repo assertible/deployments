@@ -27,16 +27,18 @@ If you don't have an Assertible account yet, you can
 
 ## Overview
 
-This README describes how to connect Assertible tests to GitHub
-deployment events using different providers. There are basically two
-ways to connect your web service's repository to GitHub deployment
+This README describes how to connect **Assertible** tests to
+**GitHub** deployment events using different providers. There are two
+ways to connect your web service repository to GitHub deployment
 events.
 
 1. Using a providers built-in integration
 
     Some providers have an integration which works without the need to
     add any extra code. For example, [Heroku](#-heroku) will
-    automatically post deployment events to GitHub.
+    automatically post deployment events to GitHub (/we've primary
+    tested with
+    [Heroku Review Apps](https://devcenter.heroku.com/articles/github-integration-review-apps)/).
 
 2. Custom script
 
@@ -44,19 +46,26 @@ events.
     CI pipeline w/ GitHub deployment events:
 
     The most basic way to use this integration is to use our limited
-    two line script:
+    two line script (copy it into your CI or manual deploy script):
 
     ```
     DEPLOY_ID=$(curl -XPOST --verbose "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
-    curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
+    curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$REPO/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
     ```
 
-    For a more extensive set of features, you may with to use the
+    For a more comprehensive set of features, you may with to use the
     `github_deploy` script. It has several improvements over the short
     two-line script:
 
-    - Support for pending deployments
+    - Support for Pending deployments
+
     - Support for `environment_url`
+
+    Assertible uses the `environment_url` to dynamically identify the
+    host your web app is being served from. Assertible will then run
+    your tests against the service being deployed (as opposed to
+    testing your production service).
+
     - Support for `auto_inactive`
 
     Using the `github_deploy` script is For example:
