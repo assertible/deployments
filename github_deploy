@@ -23,7 +23,7 @@ ENVIRONMENT_URL=$3
 STATUS=${4:-success}
 DEPLOY_ID=${5}
 DEPLOY_URL="https://$GH_TOKEN@api.github.com/repos/$REPO/deployments"
-
+ENVIRONMENT_NAME=${ENVIRONMENT_NAME:-staging}
 CONTENT_TYPE_HEADER="Content-Type:application/json"
 
 # Use the deployment developer preview, if available. If the
@@ -41,7 +41,7 @@ then
 else
 
     DEPLOY_ID=$(curl -XPOST -s $DEPLOY_URL -H ${CONTENT_TYPE_HEADER} -H ${ACCEPT_HEADER} \
-                     --data '{"ref":"'"$SHA1"'", "environment":"staging", "auto_merge":false, "required_contexts": [], "payload": "{\"url\":\"https://some.environment.url.com\"}"}' \
+                     --data '{"ref":"'"$SHA1"'", "environment":"'"$ENVIRONMENT_NAME"'", "auto_merge":false, "required_contexts": [], "payload": "{}"}' \
                        | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
 
     DEPLOY_STATUS_URL="https://$GH_TOKEN@api.github.com/repos/$REPO/deployments/$DEPLOY_ID/statuses"
