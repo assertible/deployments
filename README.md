@@ -75,7 +75,7 @@ events.
 
     $ DEPLOY_ID=$(./github_deploy.sh $CIRCLE_SHA1 org/repo https://staging.url.com "pending")
 
-      .. run your build steps ...
+      .. run your deploy steps ...
 
     $ ./github_deploy.sh $CIRCLE_SHA1 org/repo https://staging.url.com "success" $DEPLOY_ID
     ```
