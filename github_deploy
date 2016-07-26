@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# Usage:
+#
+#    required env vars
+#    GH_TOKEN=lk34j234
+#
+#    $ DEPLOY_ID=$(./github_deploy.sh $CIRCLE_SHA1 assertible/repo https://staging.app.com "pending")
+#
+#    $ ./github_deploy.sh $CIRCLE_SHA1 assertible/repo https://staging.app.com "success" $DEPLOY_ID
+#
+# Notes:
+#   - This script is designed to be light-weight and work under any CI
+#     environment w/ bash & python.
+#
+#   - This script uses features from the GitHub developer preview
+#     "ant-man-preview" <https://developer.github.com/changes/2016-04-06-deployment-and-deployment-status-enhancements/>. In practice, this means that the "environment_url" &
+#     "auto_inactive" are used when possible.
+
+SHA1=$1
+REPO=$2
+ENVIRONMENT_URL=$3
+STATUS=${4:-success}
+DEPLOY_ID=${5}
+DEPLOY_URL="https://$GH_TOKEN@api.github.com/repos/$REPO/deployments"
+ENVIRONMENT_NAME=${ENVIRONMENT_NAME:-staging}
+CONTENT_TYPE_HEADER="Content-Type:application/json"
+
+# Use the deployment developer preview, if available. If the
+# ant-man-preview is not available, some POST'ed fields will have no
+# effect (environment_url, auto_inactive, etc)
+ACCEPT_HEADER="Accept:application/vnd.github.ant-man-preview+json,application,json"
+
+if [[ "$DEPLOY_ID" ]]
+then
+
+    DEPLOY_STATUS_URL="https://$GH_TOKEN@api.github.com/repos/$REPO/deployments/$DEPLOY_ID/statuses"
+    curl -s -XPOST ${DEPLOY_STATUS_URL} -H ${CONTENT_TYPE_HEADER} -H ${ACCEPT_HEADER} \
+         --data '{ "environment_url":"'"$ENVIRONMENT_URL"'", "state":"'"$STATUS"'", "auto_inactive": true }'
+
+else
+
+    DEPLOY_ID=$(curl -XPOST -s $DEPLOY_URL -H ${CONTENT_TYPE_HEADER} -H ${ACCEPT_HEADER} \
+                     --data '{"ref":"'"$SHA1"'", "environment":"'"$ENVIRONMENT_NAME"'", "auto_merge":false, "required_contexts": [], "payload": "{}"}' \
+                       | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
+
+    DEPLOY_STATUS_URL="https://$GH_TOKEN@api.github.com/repos/$REPO/deployments/$DEPLOY_ID/statuses"
+
+    curl -s -XPOST ${DEPLOY_STATUS_URL} -H ${CONTENT_TYPE_HEADER} -H ${ACCEPT_HEADER} \
+         --data '{ "environment_url":"'"$ENVIRONMENT_URL"'", "state":"'"$STATUS"'", "auto_inactive": true }' > /dev/null
+
+    echo $DEPLOY_ID
+
+fi
