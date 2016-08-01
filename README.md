@@ -95,9 +95,11 @@ the recommended steps for setting up your Assertible integration:
 
 - [Additional resources](#additional-resources)
 
-- [Example Projects](#example-projects)
+- [GitHub status checks](#github-status-checks)
 
 - [Badges!](#test-badges)
+
+- [Example Projects](#example-projects)
 
 ## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-logo.png" width="50" alt="Heroku" style="margin-bottom:-10px" /> Heroku
 
@@ -270,6 +272,35 @@ services that make this work:
 - [Setting up Assertible and GitHub Deployments](https://assertible.com/docs#github-deployments)
 - [GitHub Deployments API](https://developer.github.com/v3/repos/deployments/)
 
+## GitHub status checks
+
+Enabling this integration will also gives you
+[GitHub status checks](https://github.com/blog/1935-see-results-from-all-pull-request-status-checks)
+on your GitHub PR's and deployments. You can test and verify that your
+staging and production environments are working correctly with
+end-to-end tests every time you push new code.
+
+Once you set up the deployment scripts from this repo, and have
+[created an Assertible account](https://assertible.com/signup), you
+should be ready to create a PR and check out the continuous testing
+status checks in your repo.
+
+![Assertible GitHub Status Check](https://s3-us-west-2.amazonaws.com/assertible/blog/assertible-github-status-check-master)
+
+## Test Badges
+
+Assertible offers
+[test badges](https://assertible.com/docs#test-badges) so you can
+display the current status of your API or website's assertions. The
+badges can be retrieved from within your
+[Assertible dashboard](https://assertible.com/login). Here's what they
+look like:
+
+![Assertible status](https://assertible.com/tests/c5116251-e4de-4a69-a82b-aa7045b6de60/status?api_token=138d9afe7ffa6f508e)
+
+Cool! Pick yours up today and add it to your repository -- or start in
+the [documentation](https://assertible.com/docs#test-badges)
+
 ## Example projects
 
 There are some open source projects using Assertible with this
@@ -290,20 +321,6 @@ helpful:
 
 _Have an open source project using Assertble for post deployment
 testing? Drop us a note and we'll add it to the list!_
-
-## Test Badges
-
-Assertible offers
-[test badges](https://assertible.com/docs#test-badges) so you can
-display the current status of your API or website's assertions. The
-badges can be retrieved from within your
-[Assertible dashboard](https://assertible.com/login). Here's what they
-look like:
-
-![Assertible status](https://assertible.com/tests/c5116251-e4de-4a69-a82b-aa7045b6de60/status?api_token=138d9afe7ffa6f508e)
-
-Cool! Pick yours up today and add it to your repository -- or start in
-the [documentation](https://assertible.com/docs#test-badges)
 
 ## License
 
