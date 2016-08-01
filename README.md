@@ -22,6 +22,8 @@ should be straightforward. This document, and the configuration files
 in this repo, will help you set up your Assertible tests to run after
 new deployments.
 
+[![Assertible status](https://s3-us-west-2.amazonaws.com/assertible/blog/assertible-github-status-check.png)](https://assertible.com/blog/github-status-checks)
+
 If you don't have an Assertible account yet, you can
 [**sign up for free**](https://assertible.com/signup).
 
