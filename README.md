@@ -287,14 +287,14 @@ status checks in your repo.
 
 ![Assertible GitHub Status Check](https://s3-us-west-2.amazonaws.com/assertible/blog/assertible-github-status-check-master)
 
-## Test Badges
+## Status Badges
 
-Assertible offers
-[test badges](https://assertible.com/docs#test-badges) so you can
-display the current status of your API or website's assertions. The
-badges can be retrieved from within your
-[Assertible dashboard](https://assertible.com/login). Here's what they
-look like:
+Assertible
+offers [status badges](https://assertible.com/docs#test-badges) for
+your web services and tests to display the current state of your
+application. The badges can be retrieved from within
+your [Assertible dashboard](https://assertible.com/login). Here's what
+they look like:
 
 ![Assertible status](https://assertible.com/apis/19f22308-4694-40f3-973d-69a5584e9a95/status?api_token=8b55a286830323effb)
 
