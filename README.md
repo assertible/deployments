@@ -6,7 +6,7 @@
 
 # Post deployment testing with Assertible
 
-[![Assertible status](https://assertible.com/tests/c5116251-e4de-4a69-a82b-aa7045b6de60/status?api_token=138d9afe7ffa6f508e)](https://assertible.com/docs#test-badges)
+[![Assertible status](https://assertible.com/apis/19f22308-4694-40f3-973d-69a5584e9a95/status?api_token=8b55a286830323effb)](https://assertible.com/docs#test-badges)
 
 > Post deployment testing is the process of running automated tests
 > against your production or staging environment after deploying a new
@@ -296,7 +296,7 @@ badges can be retrieved from within your
 [Assertible dashboard](https://assertible.com/login). Here's what they
 look like:
 
-![Assertible status](https://assertible.com/tests/c5116251-e4de-4a69-a82b-aa7045b6de60/status?api_token=138d9afe7ffa6f508e)
+![Assertible status](https://assertible.com/apis/19f22308-4694-40f3-973d-69a5584e9a95/status?api_token=8b55a286830323effb)
 
 Cool! Pick yours up today and add it to your repository -- or start in
 the [documentation](https://assertible.com/docs#test-badges)
