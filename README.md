@@ -377,7 +377,7 @@ helpful:
   reichertbrothers.com is the website for a Haskell consulting
   company. The website is deployed to GitHub Pages from a Travis-CI
   build. Once the site has been successfuly deployed, a deployment
-  event is triggered and Assertible's post-production tests will run.
+  event is triggered and Assertible's post-deployment tests will run.
 
 - [CheckAFlip](http://checkaflip.com)
   CheckAFlip is a tool for quickly learning the best price at which to
@@ -385,11 +385,18 @@ helpful:
   deploying, Heroku sends a deployment success event and Assertible
   test's get run.
 
-_Have an open source project using Assertble for post deployment
-testing? Drop us a note and we'll add it to the list!_
+_Have an open source project using Assertible for post deployment
+testing? Open a PR to add it to the list, or open an issue!_
 
 ## License
 
 All of the code snippets in this repository are licensed under MIT.
 
 [View the license](https://github.com/assertible/deployments/blob/master/LICENSE)
+
+
+---
+
+> [assertible.com](http://assertible.com) &nbsp;&middot;&nbsp;
+> GitHub [@assertible](https://github.com/assertible) &nbsp;&middot;&nbsp;
+> Twitter [@AssertibleApp](https://twitter.com/AssertibleApp)
