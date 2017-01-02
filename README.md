@@ -99,7 +99,7 @@ the recommended steps for setting up your Assertible integration:
 
 - [GitHub status checks](#github-status-checks)
 
-- [Badges!](#test-badges)
+- [Badges!](#status-badges)
 
 - [Example Projects](#example-projects)
 
@@ -208,7 +208,7 @@ describe the most common use-cases:
 
 **Sections**
 
-- [Example `circle.yml`](#example-circle-config)
+- [Example `circle.yml`](#example-circleci-config)
 - [Using the `deployment` step](#deployment)
 - [Creating an API token](#creating-an-api-token)
 
@@ -257,7 +257,7 @@ describe the most common workflows:
 **Sections**
 
 - [Example `wercker.yml`](#example-wercker-config)
-- [Using the `deployment` step](#deployment-step)
+- [Using the `deployment` step](#deploy-step)
 
 ### Example Wercker config
 
@@ -265,7 +265,7 @@ You can see a runnable `wercker.yml` in the repo here:
 
 - https://github.com/assertible/deployments/blob/master/wercker.yml
 
-### `deployment`
+### `deploy` step
 
 If your `wercker.yml` runs
 a [`deployment`](http://old-devcenter.wercker.com/articles/deployment/)
