@@ -330,6 +330,14 @@ services that make this work:
 - [Setting up Assertible and GitHub Deployments](https://assertible.com/docs#github-deployments)
 - [GitHub Deployments API](https://developer.github.com/v3/repos/deployments/)
 
+**Alternatives**
+
+Sometimes you don't use GitHub, or sending deployment events isn't
+always possible. Assertible also supports a standalong Trigger URL
+that you can to run your tests outside of the Assertible dashboard any
+time. For more information, see
+the [documentation](https://assertible.com/docs#trigger-url)
+
 ## GitHub status checks
 
 Enabling this integration will also gives you
