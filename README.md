@@ -55,7 +55,7 @@ events.
     curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$REPO/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
     ```
 
-    For a more comprehensive set of features, you may with to use the
+    For a more comprehensive set of features, you may wish to use the
     `github_deploy` script. It has several improvements over the short
     two-line script:
 
@@ -93,11 +93,13 @@ the recommended steps for setting up your Assertible integration:
 
 - [Circle CI](#-circle-ci) ([website](https://circleci.com))
 
+- [Wercker](#-wercker) ([website](http://www.wercker.com/))
+
 - [Additional resources](#additional-resources)
 
 - [GitHub status checks](#github-status-checks)
 
-- [Badges!](#test-badges)
+- [Badges!](#status-badges)
 
 - [Example Projects](#example-projects)
 
@@ -206,7 +208,7 @@ describe the most common use-cases:
 
 **Sections**
 
-- [Example `circle.yml`](#example-circle-config)
+- [Example `circle.yml`](#example-circleci-config)
 - [Using the `deployment` step](#deployment)
 - [Creating an API token](#creating-an-api-token)
 
@@ -241,7 +243,59 @@ delivered in your existing deployment steps before using this script._
 Read more about `deployment` step here:
 https://circleci.com/docs/configuration/#deployment
 
-### Creating an API Token
+## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/wercker-logo.png" width="50" /> Wercker
+
+> Note that the examples below assume that you have a $GH_TOKEN
+> environment variable defined in your Wercker project. See
+> the [API token section](#creating-an-api-token).
+
+If you deploy your API or website from Wercker (especially if you're
+using the `deployment` step), then it will be easy to trigger a GitHub
+deployment event that runs your Assertible tests. The sections below
+describe the most common workflows:
+
+**Sections**
+
+- [Example `wercker.yml`](#example-wercker-config)
+- [Using the `deployment` step](#deploy-step)
+
+### Example Wercker config
+
+You can see a runnable `wercker.yml` in the repo here:
+
+- https://github.com/assertible/deployments/blob/master/wercker.yml
+
+### `deploy` step
+
+If your `wercker.yml` runs
+a [`deployment`](http://old-devcenter.wercker.com/articles/deployment/)
+step, add the following lines as the very last step in a `script`:
+
+```yaml
+deploy:
+  steps:
+    # This is where you would normally run your deployment. Right
+    # after this, we will trigger a GitHub deployment event, which
+    # tells Assertible to run your tests.
+    - script:
+      code:
+        - |
+          # These two lines will:
+          #  1. Create a GitHub deployment, and save the ID
+          #  2. Make the deployment 'successful'
+          DEPLOY_ID=$(curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$WERCKER_GIT_OWNER/$WERCKER_GIT_REPOSITORY/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
+          curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$WERCKER_GIT_OWNER/$WERCKER_GIT_REPOSITORY/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
+```
+
+_Note: If you're deployment uses a built-in provider like Heroku or
+AWS, deployment events may already be sent and this script would be
+unecessary. If possible, determine if hooks are already being
+delivered in your existing deployment steps before using this script._
+
+Read more about `deployment` step here:
+http://old-devcenter.wercker.com/articles/deployment/
+
+## Creating an API Token
 
 The configurations above assume that you have a `GH_TOKEN` environment
 variable in your CI configuration. If you don't already have that, the
@@ -250,17 +304,21 @@ easiest way to set it up is described below:
 - [Create a Peronal Access Token](https://github.com/settings/tokens)
   in your GitHub settings. Make sure to give it 'repo' access.
 
-#### Travis CI
+### Travis CI
 
-- Add than token as an environment variable in your
+- Add that token as an environment variable in your
 [Travis-CI repository settings](https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings)
 named `GH_TOKEN`.
 
-#### CircleCI CI
+### CircleCI CI
 
-- Add than token as an environment variable in your
+- Add that token as an environment variable in your
   [Circle CI repository settings](https://circleci.com/docs/environment-variables/)
   named `GH_TOKEN`.
+
+### Wercker
+
+- Add that token as an environment variable in your [Wercker project settings](http://devcenter.wercker.com/docs/environment-variables/creating-env-vars) named `GH_TOKEN`.
 
 
 ## Additional resources
@@ -271,6 +329,14 @@ services that make this work:
 - [Assertible - Getting Started](https://assertible.com/docs)
 - [Setting up Assertible and GitHub Deployments](https://assertible.com/docs#github-deployments)
 - [GitHub Deployments API](https://developer.github.com/v3/repos/deployments/)
+
+**Alternatives**
+
+Sometimes you don't use GitHub, or sending deployment events isn't
+always possible. Assertible also supports a standalong Trigger URL
+that you can to run your tests outside of the Assertible dashboard any
+time. For more information, see
+the [documentation](https://assertible.com/docs#trigger-url)
 
 ## GitHub status checks
 
@@ -311,7 +377,7 @@ helpful:
   reichertbrothers.com is the website for a Haskell consulting
   company. The website is deployed to GitHub Pages from a Travis-CI
   build. Once the site has been successfuly deployed, a deployment
-  event is triggered and Assertible's post-production tests will run.
+  event is triggered and Assertible's post-deployment tests will run.
 
 - [CheckAFlip](http://checkaflip.com)
   CheckAFlip is a tool for quickly learning the best price at which to
@@ -319,11 +385,18 @@ helpful:
   deploying, Heroku sends a deployment success event and Assertible
   test's get run.
 
-_Have an open source project using Assertble for post deployment
-testing? Drop us a note and we'll add it to the list!_
+_Have an open source project using Assertible for post deployment
+testing? Open a PR to add it to the list, or open an issue!_
 
 ## License
 
 All of the code snippets in this repository are licensed under MIT.
 
 [View the license](https://github.com/assertible/deployments/blob/master/LICENSE)
+
+
+---
+
+> [assertible.com](http://assertible.com) &nbsp;&middot;&nbsp;
+> GitHub [@assertible](https://github.com/assertible) &nbsp;&middot;&nbsp;
+> Twitter [@AssertibleApp](https://twitter.com/AssertibleApp)
