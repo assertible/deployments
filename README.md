@@ -4,29 +4,25 @@
   </a>
 </div>
 
-# Post deployment testing with Assertible
+<div align="center">
+  <h1>Continuously test your web service</h1>
+  <h3>Post-deployment testing with Assertible</h3>
+</div>
 
 <!-- NOTE: This badge is for the 'assertible/deployments' service and it should always be passing -->
 [![Assertible status](https://assertible.com/apis/4b4e1f08-63db-4e48-a738-750731c2321a/status?api_token=8b55a286830323effb)](https://assertible.com/docs#test-badges)
 
-> Post deployment testing is the process of running automated tests
-> against your production or staging environment after deploying a new
-> application version. [Assertible](https://assertible.com) integrates
-> into your GitHub deployments pipeline to run your tests and
-> assertions after each successful deploy.
-
-With Assertible's
-[Github Deployments integration](https://assertible.com/docs#github-deployments),
-you can **run tests against your API or web application every time you
-launch a new version**. Integrating into your existing CI workflow
-should be straightforward. This document, and the configuration files
-in this repo, will help you set up your Assertible tests to run after
-new deployments.
+Assertible **extends your CI pipeline** to provide **automated API
+testing** after every deployment. Assertible will work with any
+continuous integration system and we've outlined how to get started
+with some of the most popular ones below.
 
 [![Assertible status](https://s3-us-west-2.amazonaws.com/assertible/blog/assertible-github-status-check.png)](https://assertible.com/blog/github-status-checks)
 
-If you don't have an Assertible account yet, you can
-[**sign up for free**](https://assertible.com/signup).
+You can get started with post-deployment testing by connecting your
+Assertible account with GitHub, or simply using your web service's
+Trigger URL. If you don't have an Assertible account yet, you
+can [sign up free here](https://assertible.com/signup).
 
 ## Overview
 
