@@ -18,17 +18,15 @@
     />
   </a>
 </div>
+<br/>
 
-Assertible **extends your CI pipeline** to provide **automated,
-post-deployment API testing**. In this repo, you'll learn how to
-continuously test your web services using Assertible and your existing
-CI provider.
+Assertible **extends your CI pipeline** to provide **automated
+post-deployment API testing**. In this repo, you'll learn how to start
+continuously testing your API with Assertible and your existing CI
+provider. If you don't have an Assertible account yet, you
+can [get started for free](https://assertible.com/signup).
 
-<p style="color:#8e8e8e;font-size:14px">
-  If you don't have an Assertible account yet, you
-  can <a href="https://assertible.com/signup">sign up free here</a>.
-</p>
-
+<br/>
 <div align="center">
   <a href="https://assertible.com">
     <img
@@ -37,53 +35,49 @@ CI provider.
     />
   </a>
 </div>
+<br/>
 
 ## How it works
 
-There are only two steps to start continuously testing your web
-services with Assertible and your existing CI provider:
+Setting up post-deployment testing only takes two steps:
 
-1. Connect Assertible to a GitHub repository
-2. Send deployment events to your GitHub repository.
-
-_Note: Don't host your code on GitHub? That's OK! You can use
-a [Trigger URL](https://assertible.com/docs/guide/tests#trigger-urls)
-to initiate your tests from any script._
+1. [Connect Assertible to GitHub](#connect-assertible-to-github)
+2. [Send deployment events to your GitHub repo](#send-deployment-events-to-your-github-repo)
 
 After connecting one of your web services to a GitHub repo, Assertible
 will _watch_ that repo for any `deployment` events. When a successful
 deployment event is received, Assertible will automatically run your
-API tests.
+tests.
 
-#### Connect Assertible to GitHub
+_Psst - Don't host your code on GitHub? No problem! You can use
+a [Trigger URL](https://assertible.com/docs/guide/tests#trigger-urls)
+to initiate your tests from any script._
 
-There are two ways to connect Assertible to GitHub:
+### Connect Assertible to GitHub
 
-- From the [GitHub integrations directory](https://github.com/integrations/assertible)
-- From your [Assertible dashboard](https://assertible.com/dashboard)
-  ([documentation](https://assertible.com/docs/guide/tests#connect-assertible-to-github))
+You can connect Assertible to GitHub from
+the
+[GitHub integrations directory](https://github.com/integrations/assertible) or
+your [Assertible dashboard](https://assertible.com/dashboard). Learn
+more about those options
+[here](https://assertible.com/docs/guide/tests#connect-assertible-to-github).
+Once you're connected, set up a
+[GitHub deployment integration](https://assertible.com/docs/guide/automation#github-deployments) and
+select the repo to watch for deployment events.
 
-Once you're connected, you can enable
-the [GitHub deployments integration](https://assertible.com/docs/guide/automation#github-deployments) and
-select the repo you want Assertible to watch.
+### Send deployment events to your GitHub repo
 
-#### Send deployment events to your GitHub repo
+When a successful `deployment` event occurs on your repo, your API's
+tests will be run - you can even deploy to staging or review
+environments. Some CI/CD providers like [Heroku](#-heroku) already
+send deployment events. In these cases no additional configuration is
+required.
 
-Assertible watches your repository for `deployment` events and, when a
-successful deployment occurs, will automatically run your web
-service's tests.
-
-Some CI/CD providers, like [Heroku](#-heroku), will already send
-deployment events for you. In these cases no additional configuration
-is required.
-
-For all the other continuous integration services, you can use
-the [scripts provided in this repo](#integration-scripts) to manually
-send GitHub deployment events.
+We've put together some scripts you can use to manually send
+deployment events to your repo using the GitHub API:
 
 - [Simple two line script](#simple-two-line-script)
 - [`github_deploy` script](#github_deploy-script)
-
 
 ## Configurations
 
@@ -163,12 +157,6 @@ after_deploy:
 _Note: If the `deploy` command does not exit successfully then
 `after_deploy` won't run._
 
-Depending on which 'provider' you use for your deploy, you may not
-need to do this step at all. For example, if you use the Heroku
-provider and your Heroku account is
-[linked with your GitHub](#-heroku) repository, then you will already
-receive deployment events and the Assertible integration will work.
-
 ### `after_success`
 
 If your `.travis.yml` runs a deployment during the
@@ -231,11 +219,6 @@ deployment:
           DEPLOY_ID=$(curl -XPOST --verbose "https://$GH_TOKEN@api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
           curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
 ```
-
-_Note: If you're deployment uses a built-in provider like Heroku or
-AWS, deployment events may already be sent and this script would be
-unecessary. If possible, determine if hooks are already being
-delivered in your existing deployment steps before using this script._
 
 Read more about `deployment` step here:
 https://circleci.com/docs/configuration/#deployment
