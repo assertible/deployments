@@ -13,7 +13,7 @@
   <!-- NOTE: This badge is for the 'assertible/deployments' service and it should always be passing -->
   <a href="https://assertible.com/docs/guide/web-services#web-service-badges">
     <img
-      src="https://s3-us-west-2.amazonaws.com/assertible/blog/assertible-3-steps.png"
+      src="https://assertible.com/apis/4b4e1f08-63db-4e48-a738-750731c2321a/status?api_token=8b55a286830323effb"
       alt="Assertible status badge"
     />
   </a>
@@ -32,7 +32,7 @@ CI provider.
 <div align="center">
   <a href="https://assertible.com">
     <img
-      src="https://s3-us-west-2.amazonaws.com/assertible/blog/assertible-github-status-check.png"
+      src="https://s3-us-west-2.amazonaws.com/assertible/blog/assertible-3-steps.png"
       alt="Assertible GitHub status checks"
     />
   </a>
