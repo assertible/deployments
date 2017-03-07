@@ -44,10 +44,9 @@ Setting up post-deployment testing only takes two steps:
 1. [Connect Assertible to GitHub](#connect-assertible-to-github)
 2. [Send deployment events to your GitHub repo](#send-deployment-events-to-your-github-repo)
 
-After connecting one of your web services to a GitHub repo, Assertible
-will _watch_ that repo for any `deployment` events. When a successful
-deployment event is received, Assertible will automatically run your
-tests.
+After connecting Assertible to GitHub, you can watch a repository for
+`deployment` events. A successful `deployment` event on your repo will
+automatically initiate your API tests.
 
 _Psst - Don't host your code on GitHub? No problem! You can use
 a [Trigger URL](https://assertible.com/docs/guide/tests#trigger-urls)
@@ -56,14 +55,10 @@ to initiate your tests from any script._
 ### Connect Assertible to GitHub
 
 You can connect Assertible to GitHub from
-the
-[GitHub integrations directory](https://github.com/integrations/assertible) or
-your [Assertible dashboard](https://assertible.com/dashboard). Learn
-more about those options
-[here](https://assertible.com/docs/guide/tests#connect-assertible-to-github).
-Once you're connected, set up a
+the [GitHub integrations directory](https://github.com/integrations/assertible) or
+your [Assertible dashboard](https://assertible.com/dashboard). Once you're connected, set up a
 [GitHub deployment integration](https://assertible.com/docs/guide/automation#github-deployments) and
-select the repo to watch for deployment events.
+select the repo you want to watch for `deployment` events.
 
 ### Send deployment events to your GitHub repo
 
