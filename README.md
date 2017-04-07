@@ -392,6 +392,16 @@ There are some open source projects using Assertible with this
 configuration; if you're a visual learner then one of these might be
 helpful:
 
+- [Node.js example app](https://github.com/assertible/nodejs-example)
+  This repo provides an example of a complete continuous integration,
+  deployment, and post-deployment testing pipeline using a Node.js example
+  app. [Check out the tutorial](https://assertible.com/blog/set-up-continuous-testing-with-nodejs)
+  
+- [Ruby API example](https://github.com/assertible/ruby-example)
+  This is an example of an automated post-deployment testing pipeline
+  on staging and production environments, with a sample Ruby API.
+  The project uses Codehsip, Heroku, and assertible.
+
 - [reichertbrothers.com](https://github.com/rbros/rbros.github.io)
   reichertbrothers.com is the website for a Haskell consulting
   company. The website is deployed to GitHub Pages from a Travis-CI
