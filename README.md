@@ -49,7 +49,7 @@ After connecting Assertible to GitHub, you can watch a repository for
 automatically initiate your API tests.
 
 _Psst - Don't host your code on GitHub? No problem! You can use
-a [Trigger URL](https://assertible.com/docs/guide/tests#trigger-urls)
+the [Assertible Deployments API](https://assertible.com/docs/guide/deployments)
 to initiate your tests from any script._
 
 ### Connect Assertible to GitHub
