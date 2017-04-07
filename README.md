@@ -13,7 +13,7 @@
   <!-- NOTE: This badge is for the 'assertible/deployments' service and it should always be passing -->
   <a href="https://assertible.com/docs/guide/web-services#web-service-badges">
     <img
-      src="https://assertible.com/apis/4b4e1f08-63db-4e48-a738-750731c2321a/status?api_token=8b55a286830323effb"
+      src="https://assertible.com/apis/325de75c-ab63-4072-ba3f-afb1a5150e93/status?api_token=8b55a286830323effb"
       alt="Assertible status badge"
     />
   </a>
