@@ -381,7 +381,7 @@ application. The badges can be retrieved from within
 your [Assertible dashboard](https://assertible.com/login). Here's what
 they look like:
 
-![Assertible status](https://assertible.com/apis/4b4e1f08-63db-4e48-a738-750731c2321a/status?api_token=8b55a286830323effb)
+[![Assertible status](https://assertible.com/apis/325de75c-ab63-4072-ba3f-afb1a5150e93/status?api_token=8b55a286830323effb)](https://assertible.com/docs/guide/web-services#status-badges)
 
 Cool! Pick yours up today and add it to your repository -- or start in
 the [documentation](https://assertible.com/docs#test-badges)
