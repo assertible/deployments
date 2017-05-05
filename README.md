@@ -49,13 +49,13 @@ tests** to run on your live web app, and reports any test failures.
 When
 you
 [connect Assertible to a GitHub repo](#view-the-result-in-a-github-status-check),
-**the post deployment test results will show as a status check** on
+the post deployment test results will show as a **status check** on
 your commits and pull requests.
 
 ### Send a deployment to the Assertible API
 
 The [Deployments API](https://assertible.com/docs/guide/deployments)
-is used to **run integration tests on your app after a deployment**.
+is used to **run integration tests** on your app after a deployment.
 Tests can be run on different environments, like `staging` or `qa`, by
 making a simple `POST` request:
 
