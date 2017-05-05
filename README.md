@@ -21,12 +21,9 @@
 <br/>
 
 Assertible **extends your CI pipeline** to provide **automated
-post-deployment API testing**. In this repo, you'll learn how to start
-continuously testing your API with Assertible from CI.  If you don't
-have an Assertible account yet, you
-can [start testing for free](https://assertible.com/signup).
+post-deployment API testing**. In this repo, you'll learn how to run
+automated tests against your web app after deploying from CI.
 
-<br/>
 <div align="center">
   <a href="https://assertible.com">
     <img
@@ -35,30 +32,34 @@ can [start testing for free](https://assertible.com/signup).
     />
   </a>
 </div>
-<br/>
+
+_Don't have an Assertible account
+yet? [Sign up for free](https://assertible.com/signup)._
 
 ## How it works
-
-Setting up post-deployment testing only takes two steps:
 
 1. [Send a _deployment_ to the Assertible API](#send-a-deployment-to-the-assertible-api)
 2. [View the result in a GitHub status check](#view-the-result-in-a-github-status-check)
 
-Start by sending a deployment to the Assertible API when you deploy
-your app from CI. Assertible will run tests against the live web app,
-and report any failures.
+Start by sending a deployment to
+the [Assertible API](https://assertible.com/docs/guide/deployments)
+when you deploy your app from CI. This initiates your integration
+tests to run on the live app, and reports any test failures.
 
-When you connect Assertible to a GitHub repo, the post deployment test
-results will show as a status check on your commits and pull requests.
+When
+you
+[connect Assertible to a GitHub repo](#view-the-result-in-a-github-status-check),
+the post deployment test results will show as a status check on your
+commits and pull requests.
 
 ### Send a deployment to the Assertible API
 
-The [Deployments API]() is used to run integration tests againsts your
-API or website after you've pushed new changes. Tests can be run on
-different environments, like `staging` or `qa`, and you can specify
-other parameters like the version.
+The [Deployments API](https://assertible.com/docs/guide/deployments)
+is used to initiate integration tests on your app after a deployment.
+Tests can be run on different environments, like `staging` or `qa`,
+and can added to any continuous delivery pipeline.
 
-To `POST` a deployment is a simple request:
+`POST`ing a deployment can be done with a simple request:
 
 ```sh
 curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
@@ -72,7 +73,7 @@ curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
 }'
 ```
 
-That's it. Make that request from your continuous deployment setup or
+That's it! Make that request from your continuous deployment setup or
 a script, and your web service will be tested after you make changes.
 
 For examples on where to use this with services like TravisCI or
