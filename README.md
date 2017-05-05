@@ -92,7 +92,7 @@ you
 any of the tests fail, a failing status check will show on your
 commits, and a passing status check will show if all tests pass.
 
-![Assertible GitHub Status Check](https://s3-us-west-2.amazonaws.com/assertible/blog/assertible-github-status-check-master)
+![Assertible GitHub Status Check](https://s3-us-west-2.amazonaws.com/assertible/blog/assertible-github-status-check-simple.png)
 
 ## Example configurations
 
