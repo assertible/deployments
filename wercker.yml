@@ -2,14 +2,15 @@ box: ruby
 
 deploy:
   steps:
-    # This is where you would normally run your deployment. Right
-    # after the application is deployed, we will trigger a GitHub
-    # deployment event, which tells Assertible to run your tests.
+    # Run your normal deployment here. Then, call the Assertible API
+    # to initiate your integration tests.
     - script:
       code:
         - |
-          # These two lines will:
-          #  1. Create a GitHub deployment, and save the ID
-          #  2. Make the deployment 'successful'
-          DEPLOY_ID=$(curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$WERCKER_GIT_OWNER/$WERCKER_GIT_REPOSITORY/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
-          curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$WERCKER_GIT_OWNER/$WERCKER_GIT_REPOSITORY/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
+          curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
+              "service": "'"${ASSERTIBLE_SERVICE}"'",
+              "environmentName": "production",
+              "version": "'"${WERCKER_GIT_COMMIT}"'",
+              "ref": "'"${WERCKER_GIT_COMMIT}"'",
+              "github": true
+          }'

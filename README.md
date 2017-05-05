@@ -64,7 +64,6 @@ curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
     "service": "'"${SERVICE}"'",
     "environmentName": "'"${ENVIRONMENT}"'",
     "version": "'"${VERSION}"'",
-
     # Optional
     "ref": "'"${COMMIT_ID}"'",
     "github": true
@@ -165,8 +164,8 @@ after_deploy:
     curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
         "service": "'"${ASSERTIBLE_SERVICE}"'",
         "environmentName": "'"${ENVIRONMENT}"'",
-        "version": "'"${VERSION}"'",
-        "ref": "'"${COMMIT_ID}"'",
+        "version": "'"${TRAVIS_COMMIT}"'",
+        "ref": "'"${TRAVIS_COMMIT}"'",
         "github": true
     }'
 ```
@@ -190,8 +189,8 @@ after_script:
     curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
         "service": "'"${ASSERTIBLE_SERVICE}"'",
         "environmentName": "'"${ENVIRONMENT}"'",
-        "version": "'"${VERSION}"'",
-        "ref": "'"${COMMIT_ID}"'",
+        "version": "'"${TRAVIS_COMMIT}"'",
+        "ref": "'"${TRAVIS_COMMIT}"'",
         "github": true
     }'
 ```
@@ -237,8 +236,8 @@ deployment:
         curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
             "service": "'"${ASSERTIBLE_SERVICE}"'",
             "environmentName": "'"${ENVIRONMENT}"'",
-            "version": "'"${VERSION}"'",
-            "ref": "'"${COMMIT_ID}"'",
+            "version": "'"${CIRCLE_SHA1}"'",
+            "ref": "'"${CIRCLE_SHA1}"'",
             "github": true
         }'
 ```
@@ -286,8 +285,8 @@ deploy:
           curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
               "service": "'"${ASSERTIBLE_SERVICE}"'",
               "environmentName": "'"${ENVIRONMENT}"'",
-              "version": "'"${VERSION}"'",
-              "ref": "'"${COMMIT_ID}"'",
+              "version": "'"${WERCKER_GIT_COMMIT}"'",
+              "ref": "'"${WERCKER_GIT_COMMIT}"'",
               "github": true
           }'
 ```

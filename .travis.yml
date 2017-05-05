@@ -1,6 +1,5 @@
 
 language: <project language>
-
 script: echo "Run your build here"
 
 # Only use the `after_deploy` step if you are using the `deploy`
@@ -8,5 +7,10 @@ script: echo "Run your build here"
 # the `after_script` step.
 after_deploy:
   - |
-    DEPLOY_ID=$(curl -XPOST --verbose "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
-    curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
+    curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
+        "service": "'"${ASSERTIBLE_SERVICE}"'",
+        "environmentName": "production",
+        "version": "'"${TRAVIS_COMMIT}"'",
+        "ref": "'"${TRAVIS_COMMIT}"'",
+        "github": true
+    }'
