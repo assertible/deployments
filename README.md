@@ -30,8 +30,8 @@ can [start testing for free](https://assertible.com/signup).
 <div align="center">
   <a href="https://assertible.com">
     <img
-      src="https://s3-us-west-2.amazonaws.com/assertible/blog/assertible-3-steps.png"
-      alt="Assertible GitHub status checks"
+      src="https://s3-us-west-2.amazonaws.com/assertible/blog/deployments-api-diagram-no-title.png"
+      alt="API integration tests after a deployment with Assertible"
     />
   </a>
 </div>
@@ -46,9 +46,10 @@ Setting up post-deployment testing only takes two steps:
 
 Start by sending a deployment to the Assertible API when you deploy
 your app from CI. Assertible will run tests against the live web app,
-and report of any failures. When you connect Assertible to a GitHub
-repo, the post deployment test results will show as a status check on
-your commits and pull requests.
+and report any failures.
+
+When you connect Assertible to a GitHub repo, the post deployment test
+results will show as a status check on your commits and pull requests.
 
 ### Send a deployment to the Assertible API
 
