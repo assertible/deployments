@@ -44,13 +44,11 @@ Setting up post-deployment testing only takes two steps:
 1. [Send a _deployment_ to the Assertible API](#send-a-deployment-to-the-assertible-api)
 2. [View the result in a GitHub status check](#view-the-result-in-a-github-status-check)
 
-Start by sending a deployment event to the Assertible API when you
-deploy your app from CI. This will run your tests against the live web
-app, and report you of any failures.  When you connect Assertible to a
-GitHub repo, the post deployment test results will show as a status
-check on your commits and pull requests.
-
-_Psst - Don't host your code on GitHub? No problem! Just skip step 1!_
+Start by sending a deployment to the Assertible API when you deploy
+your app from CI. Assertible will run tests against the live web app,
+and report of any failures. When you connect Assertible to a GitHub
+repo, the post deployment test results will show as a status check on
+your commits and pull requests.
 
 ### Send a deployment to the Assertible API
 
@@ -169,7 +167,13 @@ like this:
 ```yaml
 after_deploy:
   - |
-    TODO
+    curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
+        "service": "'"${SERVICE}"'",
+        "environmentName": "'"${ENVIRONMENT}"'",
+        "version": "'"${VERSION}"'",
+        "ref": "'"${COMMIT_ID}"'",
+        "github": true
+    }'
 ```
 
 _Note: If the `deploy` command does not exit successfully then
@@ -191,7 +195,13 @@ Example in the `after_script` step:
 ```yaml
 after_script:
   - |
-    TODO
+    curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
+        "service": "'"${SERVICE}"'",
+        "environmentName": "'"${ENVIRONMENT}"'",
+        "version": "'"${VERSION}"'",
+        "ref": "'"${COMMIT_ID}"'",
+        "github": true
+    }'
 ```
 
 Read more about `after_success` step here:
@@ -233,7 +243,13 @@ deployment:
     commands:
       # - ./deploy script here
       - |
-        TODO
+        curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
+            "service": "'"${SERVICE}"'",
+            "environmentName": "'"${ENVIRONMENT}"'",
+            "version": "'"${VERSION}"'",
+            "ref": "'"${COMMIT_ID}"'",
+            "github": true
+        }'
 ```
 
 Read more about `deployment` step here:
@@ -276,7 +292,13 @@ deploy:
     - script:
       code:
         - |
-          TODO
+          curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
+              "service": "'"${SERVICE}"'",
+              "environmentName": "'"${ENVIRONMENT}"'",
+              "version": "'"${VERSION}"'",
+              "ref": "'"${COMMIT_ID}"'",
+              "github": true
+          }'
 ```
 
 Read more about `deployment`
