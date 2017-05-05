@@ -77,7 +77,7 @@ That's it. Make that request from your continuous deployment setup or
 a script, and your web service will be tested after you make changes.
 
 For examples on where to use this with services like TravisCI or
-Wercker, see the examples section.
+Wercker, see the [example configurations](#example-configurations).
 
 ### View the result in a GitHub status check
 
@@ -131,9 +131,8 @@ account
 
 ## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/TravisCI-Mascot-original.png" width="50" /> Travis CI
 
-> Note that the examples below assume that you have a $GH_TOKEN
-> environment variable defined in your Travis environment. See the [API
-> token section](#creating-an-api-token).
+> Note that the examples below assume that you have environment
+> variables set See the [API token section](#creating-an-api-token).
 
 If you deploy a website or API from Travis-CI (especially if you're
 using the `deploy` or `after_success` steps), then it will be easy to
@@ -160,16 +159,16 @@ determine which setup will work best._
 ### `deploy`
 
 If you use the [`deploy`](https://docs.travis-ci.com/user/deployment)
-step in your Travis configuration then you can create a GitHub
-deployment event in the
-[`after_deploy`](https://docs.travis-ci.com/user/customizing-the-build/#Deploying-your-Code)
-step, like this:
+step in your Travis configuration then you can create a deployment
+event in
+the
+[`after_deploy`](https://docs.travis-ci.com/user/customizing-the-build/#Deploying-your-Code) step,
+like this:
 
 ```yaml
 after_deploy:
   - |
-    DEPLOY_ID=$(curl -XPOST --verbose "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
-    curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
+    TODO
 ```
 
 _Note: If the `deploy` command does not exit successfully then
@@ -191,8 +190,7 @@ Example in the `after_script` step:
 ```yaml
 after_script:
   - |
-    DEPLOY_ID=$(curl -XPOST --verbose "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
-    curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
+    TODO
 ```
 
 Read more about `after_success` step here:
@@ -200,9 +198,8 @@ https://docs.travis-ci.com/user/customizing-the-build/
 
 ## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/circleci-logo.png" width="50" /> Circle CI
 
-> Note that the examples below assume that you have a $GH_TOKEN
-> environment variable defined in your Circle CI environment. See the [API
-> token section](#creating-an-api-token).
+> Note that the examples below assume that you have environment
+> variables set See the [API token section](#creating-an-api-token).
 
 If you deploy a website or API from Circle CI (especially if you're
 using the `deployment` step), then it will be easy to trigger a
@@ -234,8 +231,7 @@ deployment:
     commands:
       # - ./deploy script here
       - |
-          DEPLOY_ID=$(curl -XPOST --verbose "https://$GH_TOKEN@api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
-          curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
+        TODO
 ```
 
 Read more about `deployment` step here:
@@ -243,12 +239,11 @@ https://circleci.com/docs/configuration/#deployment
 
 ## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/wercker-logo.png" width="50" /> Wercker
 
-> Note that the examples below assume that you have a $GH_TOKEN
-> environment variable defined in your Wercker project. See
-> the [API token section](#creating-an-api-token).
+> Note that the examples below assume that you have environment
+> variables set See the [API token section](#creating-an-api-token).
 
 If you deploy your API or website from Wercker (especially if you're
-using the `deployment` step), then it will be easy to trigger a GitHub
+using the `deployment` step), then it will be easy to trigger a
 deployment event that runs your Assertible tests. The sections below
 describe the most common workflows:
 
@@ -278,11 +273,7 @@ deploy:
     - script:
       code:
         - |
-          # These two lines will:
-          #  1. Create a GitHub deployment, and save the ID
-          #  2. Make the deployment 'successful'
-          DEPLOY_ID=$(curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$WERCKER_GIT_OWNER/$WERCKER_GIT_REPOSITORY/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
-          curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$WERCKER_GIT_OWNER/$WERCKER_GIT_REPOSITORY/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
+          TODO
 ```
 
 Read more about `deployment`
@@ -290,49 +281,9 @@ step [here](http://old-devcenter.wercker.com/articles/deployment/).
 
 ## Integration scripts
 
-The examples in this repo are using these two simple scripts to send deployment events to GitHub. These are both open sourced and you are free to copy and use them in your own code.
-
-#### Simple two line script
-
-The simplest way to send deployment events to your GitHub repository is using this two-line:
-
-```
-DEPLOY_ID=$(curl -XPOST --verbose "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
-curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$REPO/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
-```
-
-The first line creates a _new_ deployment on your repo and sends it to
-GitHub. The second line then _updates_ that deployment with a
-_success_ status.
-
-The second line is important -- Assertible will only run your tests
-after a _successful_ deployment event.
-
-#### `github_deploy` script
-
-For a more comprehensive set of features, you may wish to use the
-`github_deploy` script also provided in this repo. It has several
-improvements over the short two-line script:
-
-- Support for Pending deployments
-- Support for `environment_url`
-- Support for `auto_inactive`
-
-Assertible uses the `environment_url` from the deployment events to
-determine what environment to test -- for example, staging or
-production and will then run your tests against the environment being
-deployed.
-
-```
-$ export GH_TOKEN=lk34j234
-$ DEPLOY_ID=$(./github_deploy.sh $CIRCLE_SHA1 org/repo https://staging.url.com "pending")
-.. run your deploy steps ...
-$ ./github_deploy.sh $CIRCLE_SHA1 org/repo https://staging.url.com "success" $DEPLOY_ID
-```
-
-_Note: If your code isn't hosted on GitHub that's OK! Assertible
-offers a Trigger URL you can use to initiate your API tests_.
-
+The examples in this repo are using these two simple scripts to send
+deployment. These are both open sourced and you are free to copy and
+use them in your own code.
 
 ## Creating an API Token
 
@@ -370,7 +321,6 @@ services that make this work:
 
 - [Assertible - Getting Started](https://assertible.com/docs)
 - [Setting up Assertible and GitHub Deployments](https://assertible.com/docs#github-deployments)
-- [GitHub Deployments API](https://developer.github.com/v3/repos/deployments/)
 
 **Alternatives**
 
