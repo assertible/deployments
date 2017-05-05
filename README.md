@@ -91,7 +91,7 @@ you
 any of the tests fail, a failing status check will show on your
 commits, and a passing status check will show if all tests pass.
 
-[TODO](pic here)
+![Assertible GitHub Status Check](https://s3-us-west-2.amazonaws.com/assertible/blog/assertible-github-status-check-master)
 
 ## Example configurations
 
@@ -102,9 +102,7 @@ the recommended steps for setting up your Assertible integration:
 - [Travis CI](#-travis-ci) ([website](https://travis-ci.org))
 - [Circle CI](#-circle-ci) ([website](https://circleci.com))
 - [Wercker](#-wercker) ([website](http://www.wercker.com/))
-- [Integration scripts](#integration-scripts)
 - [Additional resources](#additional-resources)
-- [GitHub status checks](#github-status-checks)
 - [Badges!](#status-badges)
 - [Example Projects](#example-projects)
 
@@ -354,21 +352,6 @@ always possible. Assertible also supports a standalong Trigger URL
 that you can to run your tests outside of the Assertible dashboard any
 time. For more information, see
 the [documentation](https://assertible.com/docs#trigger-url)
-
-## GitHub status checks
-
-Enabling this integration will also gives you
-[GitHub status checks](https://github.com/blog/1935-see-results-from-all-pull-request-status-checks)
-on your GitHub PR's and deployments. You can test and verify that your
-staging and production environments are working correctly with
-end-to-end tests every time you push new code.
-
-Once you set up the deployment scripts from this repo, and have
-[created an Assertible account](https://assertible.com/signup), you
-should be ready to create a PR and check out the continuous testing
-status checks in your repo.
-
-![Assertible GitHub Status Check](https://s3-us-west-2.amazonaws.com/assertible/blog/assertible-github-status-check-master)
 
 ## Status Badges
 
