@@ -132,7 +132,8 @@ account
 ## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/TravisCI-Mascot-original.png" width="50" /> Travis CI
 
 > Note that the examples below assume that you have environment
-> variables set See the [API token section](#creating-an-api-token).
+> variables set. See
+> the [environment variables section](#environment-variables).
 
 If you deploy a website or API from Travis-CI (especially if you're
 using the `deploy` or `after_success` steps), then it will be easy to
@@ -144,7 +145,7 @@ below describe the most common use-cases:
 - [Example `.travis.yml`](#example-travis-config)
 - [Using the `after_deploy` step](#deploy)
 - [Using `after_script` or `after_success`](#after_success)
-- [Creating an API token](#creating-an-api-token)
+- [Creating an API token](#environment-variables)
 
 ### Example Travis config
 
@@ -199,7 +200,8 @@ https://docs.travis-ci.com/user/customizing-the-build/
 ## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/circleci-logo.png" width="50" /> Circle CI
 
 > Note that the examples below assume that you have environment
-> variables set See the [API token section](#creating-an-api-token).
+> variables set See
+> the [environment variables section](#environment-variables).
 
 If you deploy a website or API from Circle CI (especially if you're
 using the `deployment` step), then it will be easy to trigger a
@@ -210,7 +212,7 @@ describe the most common use-cases:
 
 - [Example `circle.yml`](#example-circleci-config)
 - [Using the `deployment` step](#deployment)
-- [Creating an API token](#creating-an-api-token)
+- [Creating an API token](#environment-variables)
 
 ### Example CircleCI config
 
@@ -240,7 +242,8 @@ https://circleci.com/docs/configuration/#deployment
 ## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/wercker-logo.png" width="50" /> Wercker
 
 > Note that the examples below assume that you have environment
-> variables set See the [API token section](#creating-an-api-token).
+> variables set See
+> the [environment variables section](#environment-variables).
 
 If you deploy your API or website from Wercker (especially if you're
 using the `deployment` step), then it will be easy to trigger a
@@ -285,33 +288,33 @@ The examples in this repo are using these two simple scripts to send
 deployment. These are both open sourced and you are free to copy and
 use them in your own code.
 
-## Creating an API Token
+## Environment variables
 
-The configurations above assume that you have a `GH_TOKEN` environment
-variable in your CI configuration. If you don't already have that, the
-easiest way to set it up is described below:
-
-- [Create a Peronal Access Token](https://github.com/settings/tokens)
-  in your GitHub settings. Make sure to give it 'repo' access.
+The example configurations assume you have an environment variable set
+for `ASSERTIBLE_TOKEN` and `ASSERTIBLE_SERVICE`. You can get this
+information from within
+your [Assertible dashboard](https://assertible.com/dashboard), on the
+Deployments page.
 
 ### Travis CI
 
 - Add that token as an environment variable in your
 [Travis-CI repository settings](https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings)
-named `GH_TOKEN`.
+named `ASSERTILE_TOKEN` and `ASSERTIBLE_SERVICE`.
 
 ### CircleCI CI
 
 - Add that token as an environment variable in your
   [Circle CI repository settings](https://circleci.com/docs/environment-variables/)
-  named `GH_TOKEN`.
+  named `ASSERTILE_TOKEN` and `ASSERTIBLE_SERVICE`.
+
 
 ### Wercker
 
-- Add that token as an environment variable in
+- Add that info as environment variables in
   your
   [Wercker project settings](http://devcenter.wercker.com/docs/environment-variables/creating-env-vars) named
-  `GH_TOKEN`.
+  `ASSERTILE_TOKEN` and `ASSERTIBLE_SERVICE`.
 
 
 ## Additional resources
