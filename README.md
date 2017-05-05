@@ -22,9 +22,9 @@
 
 Assertible **extends your CI pipeline** to provide **automated
 post-deployment API testing**. In this repo, you'll learn how to start
-continuously testing your API with Assertible and your existing CI
-provider. If you don't have an Assertible account yet, you
-can [get started for free](https://assertible.com/signup).
+continuously testing your API with Assertible from CI.  If you don't
+have an Assertible account yet, you
+can [start testing for free](https://assertible.com/signup).
 
 <br/>
 <div align="center">
@@ -41,40 +41,61 @@ can [get started for free](https://assertible.com/signup).
 
 Setting up post-deployment testing only takes two steps:
 
-1. [Connect Assertible to GitHub](#connect-assertible-to-github)
-2. [Send deployment events to your GitHub repo](#send-deployment-events-to-your-github-repo)
+1. [Send a _deployment_ to the Assertible API](#send-a-deployment-to-the-assertible-api)
+2. [View the result in a GitHub status check](#view-the-result-in-a-github-status-check)
 
-After connecting Assertible to GitHub, you can watch a repository for
-`deployment` events. A successful `deployment` event on your repo will
-automatically initiate your API tests.
+Start by sending a deployment event to the Assertible API when you
+deploy your app from CI. This will run your tests against the live web
+app, and report you of any failures.  When you connect Assertible to a
+GitHub repo, the post deployment test results will show as a status
+check on your commits and pull requests.
 
-_Psst - Don't host your code on GitHub? No problem! You can use
-the [Assertible Deployments API](https://assertible.com/docs/guide/deployments)
-to initiate your tests from any script._
+_Psst - Don't host your code on GitHub? No problem! Just skip step 1!_
 
-### Connect Assertible to GitHub
+### Send a deployment to the Assertible API
 
-You can connect Assertible to GitHub from
-the [GitHub integrations directory](https://github.com/integrations/assertible) or
-your [Assertible dashboard](https://assertible.com/dashboard). Once you're connected, set up a
-[GitHub deployment integration](https://assertible.com/docs/guide/automation#github-deployments) and
-select the repo you want to watch for `deployment` events.
+The [Deployments API]() is used to run integration tests againsts your
+API or website after you've pushed new changes. Tests can be run on
+different environments, like `staging` or `qa`, and you can specify
+other parameters like the version.
 
-### Send deployment events to your GitHub repo
+To `POST` a deployment is a simple request:
 
-When a successful `deployment` event occurs on your repo, your API's
-tests will be run - you can even deploy to staging or review
-environments. Some CI/CD providers like [Heroku](#-heroku) already
-send deployment events. In these cases no additional configuration is
-required.
+```sh
+curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
+    "service": "'"${SERVICE}"'",
+    "environmentName": "'"${ENVIRONMENT}"'",
+    "version": "'"${VERSION}"'",
 
-We've put together some scripts you can use to manually send
-deployment events to your repo using the GitHub API:
+    # Optional
+    "ref": "'"${COMMIT_ID}"'",
+    "github": true
+}'
+```
 
-- [Simple two line script](#simple-two-line-script)
-- [`github_deploy` script](#github_deploy-script)
+That's it. Make that request from your continuous deployment setup or
+a script, and your web service will be tested after you make changes.
 
-## Configurations
+For examples on where to use this with services like TravisCI or
+Wercker, see the examples section.
+
+### View the result in a GitHub status check
+
+When you connect Assertible to a GitHub repo, status checks will be
+shown for test results triggered by deployments. Setting up this part
+is easy, just [sign in to Assertible](https://assertible.com/login),
+and
+[connect one of your web services to a repo](https://assertible.com/docs/guide/deployments#github).
+
+Assertible will send a status check to GitHub when
+you
+[send a deployment event to the API](#send-deployment-events-to-the-api). If
+any of the tests fail, a failing status check will show on your
+commits, and a passing status check will show if all tests pass.
+
+[TODO](pic here)
+
+## Example configurations
 
 Find your continuous integration or deployments provider below to see
 the recommended steps for setting up your Assertible integration:
@@ -91,10 +112,12 @@ the recommended steps for setting up your Assertible integration:
 
 ## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-logo.png" width="50" alt="Heroku" style="margin-bottom:-10px" /> Heroku
 
-If you're using Heroku and have the GitHub integration enabled, then
-your Assertible integration will work without any further
-configuration. On the 'Deployment' page of your Heroku app, you'll
-want to see that your GitHub repository is connected:
+If you're using Heroku Review Apps, this integration will work out of
+the box with no additional
+configuration. Just
+[connect Assertible to a GitHub repo](#connect-to-a-repo) that has
+Review Apps enabled, and open a PR. You should see a status check with
+the result of your API tests.
 
 <br/>
 <div align="center">
@@ -396,7 +419,7 @@ helpful:
   This repo provides an example of a complete continuous integration,
   deployment, and post-deployment testing pipeline using a Node.js example
   app. [Check out the tutorial](https://assertible.com/blog/set-up-continuous-testing-with-nodejs)
-  
+
 - [Ruby API example](https://github.com/assertible/ruby-example)
   This is an example of an automated post-deployment testing pipeline
   on staging and production environments, with a sample Ruby API.
