@@ -7,7 +7,13 @@ deployment:
   production:
     branch: master
     commands:
-      # - ./deploy script here
+      # - Run your normal deployment here Then call Assertible, to
+      # - initiate your integration tests.
       - |
-          DEPLOY_ID=$(curl -XPOST --verbose "https://$GH_TOKEN@api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
-          curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
+        curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
+            "service": "'"${ASSERTIBLE_SERVICE}"'",
+            "environmentName": "production",
+            "version": "'"${CIRCLE_SHA1}"'",
+            "ref": "'"${CIRCLE_SHA1}"'",
+            "github": true
+        }'

@@ -21,80 +21,100 @@
 <br/>
 
 Assertible **extends your CI pipeline** to provide **automated
-post-deployment API testing**. In this repo, you'll learn how to start
-continuously testing your API with Assertible and your existing CI
-provider. If you don't have an Assertible account yet, you
-can [get started for free](https://assertible.com/signup).
+post-deployment API testing**. This repo will show you how to run
+integration tests against your web app after deploying from CI.
 
-<br/>
 <div align="center">
   <a href="https://assertible.com">
     <img
-      src="https://s3-us-west-2.amazonaws.com/assertible/blog/assertible-3-steps.png"
-      alt="Assertible GitHub status checks"
+      src="https://s3-us-west-2.amazonaws.com/assertible/blog/deployments-api-diagram-no-title.png"
+      alt="API integration tests after a deployment with Assertible"
     />
   </a>
 </div>
-<br/>
+
+_Don't have an Assertible account
+yet? [Sign up for free](https://assertible.com/signup)._
 
 ## How it works
 
-Setting up post-deployment testing only takes two steps:
+1. [Send a _deployment_ to the Assertible API](#send-a-deployment-to-the-assertible-api)
+2. [View the result in a GitHub status check](#view-the-result-in-a-github-status-check) _(optional)_
 
-1. [Connect Assertible to GitHub](#connect-assertible-to-github)
-2. [Send deployment events to your GitHub repo](#send-deployment-events-to-your-github-repo)
+Start by sending a deployment to
+the [Assertible API](https://assertible.com/docs/guide/deployments)
+after you deploy your app from CI. This will **initiate integration
+tests** to run on your live web app, and reports any test failures.
 
-After connecting Assertible to GitHub, you can watch a repository for
-`deployment` events. A successful `deployment` event on your repo will
-automatically initiate your API tests.
+When
+you
+[connect Assertible to a GitHub repo](#view-the-result-in-a-github-status-check),
+the post deployment test results will show as a **status check** on
+your commits and pull requests.
 
-_Psst - Don't host your code on GitHub? No problem! You can use
-the [Assertible Deployments API](https://assertible.com/docs/guide/deployments)
-to initiate your tests from any script._
+### Send a deployment to the Assertible API
 
-### Connect Assertible to GitHub
+The [Deployments API](https://assertible.com/docs/guide/deployments)
+is used to **run integration tests** on your app after a deployment.
+Tests can be run on different environments, like `staging` or `qa`, by
+making a simple `POST` request:
 
-You can connect Assertible to GitHub from
-the [GitHub integrations directory](https://github.com/integrations/assertible) or
-your [Assertible dashboard](https://assertible.com/dashboard). Once you're connected, set up a
-[GitHub deployment integration](https://assertible.com/docs/guide/automation#github-deployments) and
-select the repo you want to watch for `deployment` events.
+```sh
+curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
+    "service": "'"${SERVICE}"'",
+    "environmentName": "'"${ENVIRONMENT}"'",
+    "version": "'"${VERSION}"'",
+    # Optional
+    "ref": "'"${COMMIT_ID}"'",
+    "github": true
+}'
+```
 
-### Send deployment events to your GitHub repo
+That's it! When you make that request, tests will be run against your
+API to validate the new deployment.
 
-When a successful `deployment` event occurs on your repo, your API's
-tests will be run - you can even deploy to staging or review
-environments. Some CI/CD providers like [Heroku](#-heroku) already
-send deployment events. In these cases no additional configuration is
-required.
+Check out the [example configurations](#example-configurations) for
+details on integrating the script with your CI/CD provider, like
+TravisCI or Wercker.
 
-We've put together some scripts you can use to manually send
-deployment events to your repo using the GitHub API:
+### View the result in a GitHub status check
 
-- [Simple two line script](#simple-two-line-script)
-- [`github_deploy` script](#github_deploy-script)
+When you connect Assertible to a GitHub repo, status checks will be
+shown for test results triggered by deployments. Setting up this part
+is easy, just [sign in to Assertible](https://assertible.com/login),
+and
+[connect one of your web services to a repo](https://assertible.com/docs/guide/deployments#github).
 
-## Configurations
+![Assertible GitHub Status Check](https://s3-us-west-2.amazonaws.com/assertible/blog/assertible-github-status-check-simple.png)
 
-Find your continuous integration or deployments provider below to see
-the recommended steps for setting up your Assertible integration:
+Assertible will send a status check to GitHub when
+you
+[send a deployment event to the API](#send-deployment-events-to-the-api). If
+any of the tests fail, a failing status check will show on your
+commits, and a passing status check will show if all tests pass.
+
+## Example configurations
+
+Below are some examples for integrating Assertible deployments with
+various CI providers.
 
 - [Heroku](#-heroku) ([website](https://heroku.com))
 - [Travis CI](#-travis-ci) ([website](https://travis-ci.org))
 - [Circle CI](#-circle-ci) ([website](https://circleci.com))
 - [Wercker](#-wercker) ([website](http://www.wercker.com/))
-- [Integration scripts](#integration-scripts)
 - [Additional resources](#additional-resources)
-- [GitHub status checks](#github-status-checks)
-- [Badges!](#status-badges)
+- [Status badges!](#status-badges)
 - [Example Projects](#example-projects)
 
 ## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/heroku-logo.png" width="50" alt="Heroku" style="margin-bottom:-10px" /> Heroku
 
-If you're using Heroku and have the GitHub integration enabled, then
-your Assertible integration will work without any further
-configuration. On the 'Deployment' page of your Heroku app, you'll
-want to see that your GitHub repository is connected:
+If you're using Heroku Review Apps, this integration will work out of
+the box with no additional
+configuration. Just
+[connect Assertible to a GitHub repo](#connect-to-a-repo) that has
+Review Apps enabled, and open a PR. You should see a status check with
+the result of your API tests. Learn how to enable this for your Heroku
+app [here](https://devcenter.heroku.com/articles/github-integration)
 
 <br/>
 <div align="center">
@@ -102,27 +122,22 @@ want to see that your GitHub repository is connected:
 </div>
 <br/>
 
-You can read how to enable this for your Heroku
-account
-[here](https://devcenter.heroku.com/articles/github-integration)
-
 ## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/TravisCI-Mascot-original.png" width="50" /> Travis CI
 
-> Note that the examples below assume that you have a $GH_TOKEN
-> environment variable defined in your Travis environment. See the [API
-> token section](#creating-an-api-token).
+> Note that the examples below assume that you have environment
+> variables set. See
+> the [environment variables section](#environment-variables).
 
 If you deploy a website or API from Travis-CI (especially if you're
 using the `deploy` or `after_success` steps), then it will be easy to
 trigger a deployment event to run your Assertible tests. The sections
-below describe the most common use-cases:
+below describe some common use-cases:
 
 **Sections**
 
 - [Example `.travis.yml`](#example-travis-config)
-- [Using the `after_deploy` step](#deploy)
+- [Using the `after_deploy` step](#after_deploy)
 - [Using `after_script` or `after_success`](#after_success)
-- [Creating an API token](#creating-an-api-token)
 
 ### Example Travis config
 
@@ -134,23 +149,26 @@ _Note: You can just copy the two lines below into your existing
 configuration, if you have one. Otherwise, continue reading to
 determine which setup will work best._
 
-### `deploy`
+### `after_deploy`
 
 If you use the [`deploy`](https://docs.travis-ci.com/user/deployment)
-step in your Travis configuration then you can create a GitHub
-deployment event in the
-[`after_deploy`](https://docs.travis-ci.com/user/customizing-the-build/#Deploying-your-Code)
-step, like this:
+step in your Travis configuration then you can send a deployment event
+from
+the
+[`after_deploy`](https://docs.travis-ci.com/user/customizing-the-build/#Deploying-your-Code) step,
+like this:
 
 ```yaml
 after_deploy:
   - |
-    DEPLOY_ID=$(curl -XPOST --verbose "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
-    curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
+    curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
+        "service": "'"${ASSERTIBLE_SERVICE}"'",
+        "environmentName": "'"${ENVIRONMENT}"'",
+        "version": "'"${TRAVIS_COMMIT}"'",
+        "ref": "'"${TRAVIS_COMMIT}"'",
+        "github": true
+    }'
 ```
-
-_Note: If the `deploy` command does not exit successfully then
-`after_deploy` won't run._
 
 ### `after_success`
 
@@ -168,29 +186,33 @@ Example in the `after_script` step:
 ```yaml
 after_script:
   - |
-    DEPLOY_ID=$(curl -XPOST --verbose "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
-    curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
+    curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
+        "service": "'"${ASSERTIBLE_SERVICE}"'",
+        "environmentName": "'"${ENVIRONMENT}"'",
+        "version": "'"${TRAVIS_COMMIT}"'",
+        "ref": "'"${TRAVIS_COMMIT}"'",
+        "github": true
+    }'
 ```
 
-Read more about `after_success` step here:
-https://docs.travis-ci.com/user/customizing-the-build/
+Read more about `after_success`
+step [here](https://docs.travis-ci.com/user/customizing-the-build/)
 
 ## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/circleci-logo.png" width="50" /> Circle CI
 
-> Note that the examples below assume that you have a $GH_TOKEN
-> environment variable defined in your Circle CI environment. See the [API
-> token section](#creating-an-api-token).
+> Note that the examples below assume that you have environment
+> variables set See
+> the [environment variables section](#environment-variables).
 
 If you deploy a website or API from Circle CI (especially if you're
 using the `deployment` step), then it will be easy to trigger a
-deployment event to run your Assertible tests. The sections below
+deployment event to run your integration tests. The sections below
 describe the most common use-cases:
 
 **Sections**
 
 - [Example `circle.yml`](#example-circleci-config)
 - [Using the `deployment` step](#deployment)
-- [Creating an API token](#creating-an-api-token)
 
 ### Example CircleCI config
 
@@ -209,10 +231,15 @@ deployment:
   production:
     branch: master
     commands:
-      # - ./deploy script here
+      # - deploy your app normally here
       - |
-          DEPLOY_ID=$(curl -XPOST --verbose "https://$GH_TOKEN@api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
-          curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
+        curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
+            "service": "'"${ASSERTIBLE_SERVICE}"'",
+            "environmentName": "'"${ENVIRONMENT}"'",
+            "version": "'"${CIRCLE_SHA1}"'",
+            "ref": "'"${CIRCLE_SHA1}"'",
+            "github": true
+        }'
 ```
 
 Read more about `deployment` step here:
@@ -220,14 +247,14 @@ https://circleci.com/docs/configuration/#deployment
 
 ## <img src="https://s3-us-west-2.amazonaws.com/assertible/integrations/wercker-logo.png" width="50" /> Wercker
 
-> Note that the examples below assume that you have a $GH_TOKEN
-> environment variable defined in your Wercker project. See
-> the [API token section](#creating-an-api-token).
+> Note that the examples below assume that you have environment
+> variables set See
+> the [environment variables section](#environment-variables).
 
 If you deploy your API or website from Wercker (especially if you're
-using the `deployment` step), then it will be easy to trigger a GitHub
-deployment event that runs your Assertible tests. The sections below
-describe the most common workflows:
+using the `deployment` step), then it will be easy to run integration
+tests after a deployment.  The sections below describe the most common
+workflows:
 
 **Sections**
 
@@ -236,9 +263,9 @@ describe the most common workflows:
 
 ### Example Wercker config
 
-You can see a runnable `wercker.yml` in the repo here:
-
-- https://github.com/assertible/deployments/blob/master/wercker.yml
+You can see a runnable `wercker.yml` in the
+repo
+[here](https://github.com/assertible/deployments/blob/master/wercker.yml).
 
 ### `deploy` step
 
@@ -250,94 +277,51 @@ step, add the following lines as the very last step in a `script`:
 deploy:
   steps:
     # This is where you would normally run your deployment. Right
-    # after this, we will trigger a GitHub deployment event, which
-    # tells Assertible to run your tests.
+    # after this, we will tell Assertible about the deployment, and
+    # tests will be run against the app.
     - script:
       code:
         - |
-          # These two lines will:
-          #  1. Create a GitHub deployment, and save the ID
-          #  2. Make the deployment 'successful'
-          DEPLOY_ID=$(curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$WERCKER_GIT_OWNER/$WERCKER_GIT_REPOSITORY/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
-          curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$WERCKER_GIT_OWNER/$WERCKER_GIT_REPOSITORY/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
+          curl -u $ASSERTIBLE_TOKEN: -XPOST "https://assertible.com/deployments" -d'{
+              "service": "'"${ASSERTIBLE_SERVICE}"'",
+              "environmentName": "'"${ENVIRONMENT}"'",
+              "version": "'"${WERCKER_GIT_COMMIT}"'",
+              "ref": "'"${WERCKER_GIT_COMMIT}"'",
+              "github": true
+          }'
 ```
 
 Read more about `deployment`
 step [here](http://old-devcenter.wercker.com/articles/deployment/).
 
-## Integration scripts
+## Environment variables
 
-The examples in this repo are using these two simple scripts to send deployment events to GitHub. These are both open sourced and you are free to copy and use them in your own code.
+The examples above assume you have some environment variables set:
 
-#### Simple two line script
+- `ASSERTIBLE_TOKEN`
+- `ASSERTIBLE_SERVICE`
 
-The simplest way to send deployment events to your GitHub repository is using this two-line:
-
-```
-DEPLOY_ID=$(curl -XPOST --verbose "https://$GH_TOKEN@api.github.com/repos/$TRAVIS_REPO_SLUG/deployments" -H "Content-Type:application/json" --data '{"ref":"master", "auto_merge":false, "required_contexts": []}' | python -c "import json,sys;obj=json.load(sys.stdin);print obj['id'];")
-curl -XPOST "https://$GH_TOKEN@api.github.com/repos/$REPO/deployments/$DEPLOY_ID/statuses" --data '{"state":"success"}'
-```
-
-The first line creates a _new_ deployment on your repo and sends it to
-GitHub. The second line then _updates_ that deployment with a
-_success_ status.
-
-The second line is important -- Assertible will only run your tests
-after a _successful_ deployment event.
-
-#### `github_deploy` script
-
-For a more comprehensive set of features, you may wish to use the
-`github_deploy` script also provided in this repo. It has several
-improvements over the short two-line script:
-
-- Support for Pending deployments
-- Support for `environment_url`
-- Support for `auto_inactive`
-
-Assertible uses the `environment_url` from the deployment events to
-determine what environment to test -- for example, staging or
-production and will then run your tests against the environment being
-deployed.
-
-```
-$ export GH_TOKEN=lk34j234
-$ DEPLOY_ID=$(./github_deploy.sh $CIRCLE_SHA1 org/repo https://staging.url.com "pending")
-.. run your deploy steps ...
-$ ./github_deploy.sh $CIRCLE_SHA1 org/repo https://staging.url.com "success" $DEPLOY_ID
-```
-
-_Note: If your code isn't hosted on GitHub that's OK! Assertible
-offers a Trigger URL you can use to initiate your API tests_.
-
-
-## Creating an API Token
-
-The configurations above assume that you have a `GH_TOKEN` environment
-variable in your CI configuration. If you don't already have that, the
-easiest way to set it up is described below:
-
-- [Create a Peronal Access Token](https://github.com/settings/tokens)
-  in your GitHub settings. Make sure to give it 'repo' access.
+You can get this information from the _Deployments_ tab of your web
+service in
+the [Assertible dashboard](https://assertible.com/dashboard).
 
 ### Travis CI
 
-- Add that token as an environment variable in your
-[Travis-CI repository settings](https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings)
-named `GH_TOKEN`.
+Set these environment variables in
+your
+[Travis-CI repository settings](https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings).
 
 ### CircleCI CI
 
-- Add that token as an environment variable in your
-  [Circle CI repository settings](https://circleci.com/docs/environment-variables/)
-  named `GH_TOKEN`.
+Set these environment variables in
+your
+[Circle CI repository settings](https://circleci.com/docs/environment-variables/).
 
 ### Wercker
 
-- Add that token as an environment variable in
-  your
-  [Wercker project settings](http://devcenter.wercker.com/docs/environment-variables/creating-env-vars) named
-  `GH_TOKEN`.
+Set these environment variables in
+your
+[Wercker project settings](http://devcenter.wercker.com/docs/environment-variables/creating-env-vars).
 
 
 ## Additional resources
@@ -347,44 +331,29 @@ services that make this work:
 
 - [Assertible - Getting Started](https://assertible.com/docs)
 - [Setting up Assertible and GitHub Deployments](https://assertible.com/docs#github-deployments)
-- [GitHub Deployments API](https://developer.github.com/v3/repos/deployments/)
+- [Deployments API documentation](https://assertible.com/docs/guide/deployments)
 
 **Alternatives**
 
 Sometimes you don't use GitHub, or sending deployment events isn't
-always possible. Assertible also supports a standalong Trigger URL
-that you can to run your tests outside of the Assertible dashboard any
-time. For more information, see
+always possible. Assertible also supports a standalone Trigger URL
+that you can use to run your tests from outside the Assertible
+dashboard. For more information, see
 the [documentation](https://assertible.com/docs#trigger-url)
-
-## GitHub status checks
-
-Enabling this integration will also gives you
-[GitHub status checks](https://github.com/blog/1935-see-results-from-all-pull-request-status-checks)
-on your GitHub PR's and deployments. You can test and verify that your
-staging and production environments are working correctly with
-end-to-end tests every time you push new code.
-
-Once you set up the deployment scripts from this repo, and have
-[created an Assertible account](https://assertible.com/signup), you
-should be ready to create a PR and check out the continuous testing
-status checks in your repo.
-
-![Assertible GitHub Status Check](https://s3-us-west-2.amazonaws.com/assertible/blog/assertible-github-status-check-master)
 
 ## Status Badges
 
 Assertible
-offers [status badges](https://assertible.com/docs#test-badges) for
-your web services and tests to display the current state of your
+has [status badges](https://assertible.com/docs#test-badges) for your
+web services and tests to display the current state of your
 application. The badges can be retrieved from within
 your [Assertible dashboard](https://assertible.com/login). Here's what
 they look like:
 
 [![Assertible status](https://assertible.com/apis/325de75c-ab63-4072-ba3f-afb1a5150e93/status?api_token=8b55a286830323effb)](https://assertible.com/docs/guide/web-services#web-service-badges)
 
-Cool! Pick yours up today and add it to your repository -- or start in
-the [documentation](https://assertible.com/docs#test-badges)
+Nice! Pick yours up today and add it to your repository -- or learn
+more in the [documentation](https://assertible.com/docs#test-badges)
 
 ## Example projects
 
@@ -396,11 +365,16 @@ helpful:
   This repo provides an example of a complete continuous integration,
   deployment, and post-deployment testing pipeline using a Node.js example
   app. [Check out the tutorial](https://assertible.com/blog/set-up-continuous-testing-with-nodejs)
-  
+
 - [Ruby API example](https://github.com/assertible/ruby-example)
   This is an example of an automated post-deployment testing pipeline
   on staging and production environments, with a sample Ruby API.
   The project uses Codehsip, Heroku, and assertible.
+
+- [Go API example on Heroku](https://github.com/assertible/go-heroku-example) This
+  example uses a Go API that is deployed to Heroku and Review
+  Apps. Since Heroku apps work out-of-the-box, there's no need for a
+  script. [Check out the blog post](https://assertible.com/blog/automate-smoke-tests-for-a-go-api-on-heroku)
 
 - [reichertbrothers.com](https://github.com/rbros/rbros.github.io)
   reichertbrothers.com is the website for a Haskell consulting
